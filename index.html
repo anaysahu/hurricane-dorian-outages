@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hurricane Dorian — Power Outage Progression (2019)</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Leaflet Heat Plugin -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── Header ─── */
+    header {
+      background: linear-gradient(135deg, #1a1f2e 0%, #0f1520 100%);
+      border-bottom: 1px solid #21262d;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .header-icon { font-size: 28px; }
+    .header-text h1 { font-size: 1.15rem; font-weight: 700; color: #58a6ff; }
+    .header-text p  { font-size: 0.75rem; color: #8b949e; margin-top: 2px; }
+
+    /* ─── Main Layout ─── */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ─── Sidebar ─── */
+    #sidebar {
+      width: 300px;
+      min-width: 260px;
+      background: #161b22;
+      border-right: 1px solid #21262d;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section {
+      padding: 12px 14px;
+      border-bottom: 1px solid #21262d;
+    }
+    .sidebar-section h3 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #8b949e;
+      margin-bottom: 8px;
+    }
+
+    /* ─── Storm Track Info ─── */
+    .track-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .track-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      padding: 3px 0;
+    }
+    .track-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── Time Controls ─── */
+    #time-display {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f0f6fc;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    #time-sub {
+      font-size: 0.72rem;
+      color: #8b949e;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #time-slider {
+      width: 100%;
+      accent-color: #58a6ff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .playback-btns {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .btn {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #e6edf3;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn:hover { background: #30363d; }
+    .btn.active { background: #388bfd33; border-color: #58a6ff; color: #58a6ff; }
+
+    .speed-label { font-size: 0.7rem; color: #8b949e; text-align: center; margin-top: 6px; }
+    #speed-select {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      color: #e6edf3;
+      padding: 3px 6px;
+      font-size: 0.75rem;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    /* ─── Stats ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .stat-box {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.2rem; font-weight: 700; color: #f85149; }
+    .stat-val.green { color: #3fb950; }
+    .stat-val.blue  { color: #58a6ff; }
+    .stat-lbl { font-size: 0.62rem; color: #8b949e; margin-top: 2px; }
+
+    /* ─── Legend ─── */
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      margin-bottom: 5px;
+    }
+    .legend-swatch {
+      width: 14px; height: 14px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .legend-line {
+      width: 28px; height: 4px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .legend-dot-sub {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #f0c040;
+      border: 2px solid #fff;
+      flex-shrink: 0;
+    }
+    .legend-dot-lat {
+      width: 10px; height: 2px;
+      background: #4ec9b0;
+    }
+
+    /* ─── County List ─── */
+    #county-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 14px;
+    }
+    #county-scroll::-webkit-scrollbar { width: 4px; }
+    #county-scroll::-webkit-scrollbar-track { background: transparent; }
+    #county-scroll::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+
+    .county-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid #21262d11;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .county-item:hover { color: #58a6ff; }
+    .county-name { flex: 1; }
+    .county-bar-wrap { width: 60px; background: #21262d; border-radius: 2px; height: 6px; margin: 0 6px; }
+    .county-bar { height: 6px; border-radius: 2px; background: #f85149; }
+    .county-num { width: 48px; text-align: right; color: #8b949e; }
+
+    /* ─── Map ─── */
+    #map { flex: 1; }
+
+    /* ─── Tooltip ─── */
+    .leaflet-tooltip.county-tip {
+      background: #161b22ee;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #e6edf3;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px #00000066;
+    }
+    .tip-title { font-weight: 700; margin-bottom: 4px; }
+    .tip-row { display: flex; justify-content: space-between; gap: 16px; }
+    .tip-key { color: #8b949e; }
+    .tip-val { font-weight: 600; }
+
+    /* ─── Phase badge ─── */
+    #phase-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      z-index: 1000;
+      background: #1a1f2ecc;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      backdrop-filter: blur(4px);
+    }
+    #phase-label { font-weight: 700; }
+
+    /* ─── Loading Overlay ─── */
+    #loading {
+      position: fixed; inset: 0;
+      background: #0d1117;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      gap: 16px;
+    }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid #21262d;
+      border-top-color: #58a6ff;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading p { color: #8b949e; font-size: 0.85rem; }
+  </style>
+</head>
+
+<body>
+
+<!-- Loading overlay -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Loading outage data…</p>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-icon">🌀</div>
+  <div class="header-text">
+    <h1>Hurricane Dorian — Power Outage Progression &amp; Restoration</h1>
+    <p>Aug 30 – Sep 10, 2019 &nbsp;·&nbsp; Southeastern US &nbsp;·&nbsp; Data: EIA Power Outage Monitor &nbsp;·&nbsp; Map: OpenStreetMap</p>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+
+    <!-- Storm Phase -->
+    <div class="sidebar-section">
+      <h3>Storm Phase</h3>
+      <div class="track-info">
+        <div class="track-item"><div class="track-dot" style="background:#58a6ff"></div> Aug 30–31 · Approaching FL coast</div>
+        <div class="track-item"><div class="track-dot" style="background:#f0c040"></div> Sep 1–3 · FL/GA coast, Cat 1–4</div>
+        <div class="track-item"><div class="track-dot" style="background:#ff7b5a"></div> Sep 4–6 · NC/SC landfall, Cat 1</div>
+        <div class="track-item"><div class="track-dot" style="background:#f85149"></div> Sep 6–7 · Peak outages NC/VA</div>
+        <div class="track-item"><div class="track-dot" style="background:#3fb950"></div> Sep 8–10 · Restoration begins</div>
+      </div>
+    </div>
+
+    <!-- Time Controls -->
+    <div class="sidebar-section">
+      <h3>Playback</h3>
+      <div id="time-display">—</div>
+      <div id="time-sub">—</div>
+      <input type="range" id="time-slider" min="0" value="0" />
+      <div class="playback-btns">
+        <button class="btn" id="btn-prev" title="Previous hour">◀</button>
+        <button class="btn" id="btn-play" title="Play/Pause">▶ Play</button>
+        <button class="btn" id="btn-next" title="Next hour">▶</button>
+      </div>
+      <div class="speed-label">Playback speed</div>
+      <select id="speed-select">
+        <option value="800">0.5× (slow)</option>
+        <option value="400" selected>1× (normal)</option>
+        <option value="200">2× (fast)</option>
+        <option value="80">5× (very fast)</option>
+        <option value="30">10× (max)</option>
+      </select>
+    </div>
+
+    <!-- Current Stats -->
+    <div class="sidebar-section">
+      <h3>Snapshot Statistics</h3>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-val" id="stat-outages">—</div>
+          <div class="stat-lbl">Customers Out</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val blue" id="stat-counties">—</div>
+          <div class="stat-lbl">Counties Affected</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-peak">—</div>
+          <div class="stat-lbl">Hardest-hit County</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val green" id="stat-restored">—</div>
+          <div class="stat-lbl">% vs. Peak</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="sidebar-section">
+      <h3>Legend</h3>
+      <div class="legend-row"><div class="legend-swatch" style="background:#ff000011;border:1px solid #f85149"></div>Low outages (&lt;500)</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#f8514955"></div>Moderate (500–5k)</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#f85149cc"></div>High (5k–25k)</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#f85149"></div>Severe (&gt;25k)</div>
+      <div class="legend-row"><div class="legend-dot-sub"></div>Substation</div>
+      <div class="legend-row"><div class="legend-line" style="background:#58a6ff88"></div>Backbone (115–500 kV)</div>
+      <div class="legend-row"><div class="legend-line" style="background:#4ec9b066"></div>Lateral (12.47 kV)</div>
+    </div>
+
+    <!-- Top counties -->
+    <div style="padding:8px 14px 4px;border-bottom:1px solid #21262d">
+      <h3 style="font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#8b949e">Top Affected Counties</h3>
+    </div>
+    <div id="county-scroll"></div>
+
+  </div>
+
+  <!-- Map -->
+  <div style="position:relative;flex:1;">
+    <div id="map"></div>
+    <div id="phase-badge">
+      <span style="color:#8b949e">Phase: </span>
+      <span id="phase-label">—</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  HURRICANE DORIAN OUTAGE VISUALIZER
+// ─────────────────────────────────────────────
+
+const DATA_FILES = {
+  outages   : 'data/outages.json',
+  substations: 'data/substations.json',
+  grid      : 'data/grid.json',
+  counties  : 'data/counties.json',
+};
+
+let map, outageData, countyMeta, substations, gridData;
+let countyLayers = {};
+let substationMarkers = [];
+let gridLines = [];
+let heatLayer = null;
+
+let hours = [];
+let timeIdx = 0;
+let playing = false;
+let playTimer = null;
+let peakTotal = 0;
+
+// Dorian phases
+const PHASES = [
+  { end: '2019-09-01T00:00:00Z', label: '🌊 Approaching Florida', color: '#58a6ff' },
+  { end: '2019-09-04T00:00:00Z', label: '🌀 FL/GA Coast — Cat 1–4', color: '#f0c040' },
+  { end: '2019-09-06T12:00:00Z', label: '⛈️ SC/NC Landfall — Cat 1', color: '#ff7b5a' },
+  { end: '2019-09-08T00:00:00Z', label: '🔴 Peak Outages NC/VA', color: '#f85149' },
+  { end: '2099-01-01T00:00:00Z', label: '🟢 Restoration Underway', color: '#3fb950' },
+];
+
+function getPhase(hourStr) {
+  return PHASES.find(p => hourStr < p.end) || PHASES[PHASES.length - 1];
+}
+
+// ─── Colour scale for outages ───
+function outageColour(n) {
+  if (n <= 0)     return 'transparent';
+  if (n < 500)    return 'rgba(248,81,73,0.12)';
+  if (n < 2000)   return 'rgba(248,81,73,0.30)';
+  if (n < 5000)   return 'rgba(248,81,73,0.50)';
+  if (n < 15000)  return 'rgba(248,81,73,0.70)';
+  if (n < 50000)  return 'rgba(248,81,73,0.88)';
+  return 'rgba(220,30,20,0.95)';
+}
+function outageWeight(n) {
+  if (n < 100)   return 0.5;
+  if (n < 2000)  return 0.8;
+  if (n < 10000) return 1.2;
+  return 1.8;
+}
+
+// ─── Bootstrap ───
+async function init() {
+  try {
+    const [od, cm, ss, gd] = await Promise.all(
+      Object.values(DATA_FILES).map(f => fetch(f).then(r => r.json()))
+    );
+    outageData = od;
+    countyMeta = cm;
+    substations = ss;
+    gridData = gd;
+
+    hours = outageData.hours;
+    document.getElementById('time-slider').max = hours.length - 1;
+
+    buildMap();
+    buildSubstations();
+    buildGrid();
+    buildCountyPolygons();
+    buildUI();
+    updateFrame(0);
+    document.getElementById('loading').style.display = 'none';
+  } catch(e) {
+    document.querySelector('#loading p').textContent = 'Error loading data: ' + e.message;
+    console.error(e);
+  }
+}
+
+// ─── Build Leaflet Map ───
+function buildMap() {
+  map = L.map('map', {
+    center: [34.5, -78.5],
+    zoom: 6,
+    zoomControl: true,
+  });
+
+  // Dark OSM tile layer
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    maxZoom: 18,
+  }).addTo(map);
+}
+
+// ─── Substations ───
+function buildSubstations() {
+  substations.forEach(sub => {
+    const size = sub.voltage_kv >= 500 ? 10 : sub.voltage_kv >= 230 ? 8 : 6;
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:${size}px;height:${size}px;
+        background:#f0c040;
+        border:2px solid #ffffffcc;
+        border-radius:50%;
+        box-shadow:0 0 6px #f0c04088;
+      "></div>`,
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2],
+    });
+
+    const m = L.marker([sub.lat, sub.lon], { icon, zIndexOffset: 500 })
+      .bindTooltip(`
+        <div class="tip-title">⚡ ${sub.name} Substation</div>
+        <div class="tip-row"><span class="tip-key">Utility</span><span class="tip-val">${sub.utility}</span></div>
+        <div class="tip-row"><span class="tip-key">Voltage</span><span class="tip-val">${sub.voltage_kv} kV</span></div>
+        <div class="tip-row"><span class="tip-key">State</span><span class="tip-val">${sub.state}</span></div>
+      `, { className: 'county-tip', direction: 'top' })
+      .addTo(map);
+    substationMarkers.push(m);
+  });
+}
+
+// ─── Grid Lines ───
+function buildGrid() {
+  // Backbone lines
+  gridData.feeders.forEach(f => {
+    const weight = f.voltage_kv >= 500 ? 2.5 : f.voltage_kv >= 230 ? 1.8 : 1.2;
+    const line = L.polyline(f.coords, {
+      color: '#58a6ff',
+      weight,
+      opacity: 0.55,
+      dashArray: f.voltage_kv < 230 ? '6,4' : null,
+    }).bindTooltip(`
+      <div class="tip-title">${f.name}</div>
+      <div class="tip-row"><span class="tip-key">Type</span><span class="tip-val">Backbone (${f.voltage_kv} kV)</span></div>
+    `, { className: 'county-tip' }).addTo(map);
+    gridLines.push(line);
+  });
+
+  // Lateral lines
+  gridData.laterals.forEach(l => {
+    const line = L.polyline(l.coords, {
+      color: '#4ec9b0',
+      weight: 1,
+      opacity: 0.5,
+      dashArray: '4,4',
+    }).bindTooltip(`
+      <div class="tip-title">${l.name}</div>
+      <div class="tip-row"><span class="tip-key">Type</span><span class="tip-val">Distribution Lateral (${l.voltage_kv} kV)</span></div>
+    `, { className: 'county-tip' }).addTo(map);
+    gridLines.push(line);
+  });
+}
+
+// ─── County Circle Markers ───
+function buildCountyPolygons() {
+  const allFips = new Set(outageData.records.map(r => r.fips));
+  allFips.forEach(fips => {
+    const meta = countyMeta[fips];
+    if (!meta) return;
+    const circle = L.circleMarker([meta.lat, meta.lon], {
+      radius: 6,
+      fillColor: 'transparent',
+      color: 'transparent',
+      fillOpacity: 0,
+      weight: 0,
+    });
+    circle.bindTooltip('', { className: 'county-tip', sticky: true });
+    circle.addTo(map);
+    countyLayers[fips] = { circle, meta };
+  });
+}
+
+// ─── Build hour → records index ───
+let hourIndex = {};
+function buildIndex() {
+  outageData.records.forEach(r => {
+    if (!hourIndex[r.hour]) hourIndex[r.hour] = {};
+    hourIndex[r.hour][r.fips] = r;
+  });
+}
+
+// ─── Update one time frame ───
+function updateFrame(idx) {
+  timeIdx = idx;
+  const hourStr = hours[idx];
+  const snapshot = hourIndex[hourStr] || {};
+
+  // Stats
+  let totalOut = 0, affectedCount = 0, peakCounty = '', peakVal = 0;
+  const countyEntries = [];
+
+  Object.entries(snapshot).forEach(([fips, r]) => {
+    totalOut += r.outages;
+    if (r.outages > 0) affectedCount++;
+    if (r.outages > peakVal) { peakVal = r.outages; peakCounty = `${r.county}, ${r.state}`; }
+    countyEntries.push(r);
+  });
+
+  if (totalOut > peakTotal) peakTotal = totalOut;
+
+  // Update stat boxes
+  document.getElementById('stat-outages').textContent  = totalOut > 0 ? totalOut.toLocaleString() : '0';
+  document.getElementById('stat-counties').textContent = affectedCount;
+  document.getElementById('stat-peak').textContent     = peakCounty ? peakCounty.split(',')[0] : '—';
+  const pct = peakTotal > 0 ? Math.round((1 - totalOut / peakTotal) * 100) : 0;
+  document.getElementById('stat-restored').textContent = peakTotal > 0 ? `${pct}% restored` : '—';
+
+  // Phase badge
+  const ph = getPhase(hourStr);
+  const badge = document.getElementById('phase-label');
+  badge.textContent = ph.label;
+  badge.style.color = ph.color;
+
+  // Time display
+  const dt = new Date(hourStr);
+  document.getElementById('time-display').textContent =
+    dt.toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', timeZoneName:'short', timeZone:'UTC' });
+  document.getElementById('time-sub').textContent = `Frame ${idx + 1} of ${hours.length}`;
+
+  // Slider
+  document.getElementById('time-slider').value = idx;
+
+  // Update county markers + heat data
+  const heatPts = [];
+  const maxOut = Math.max(...Object.values(snapshot).map(r => r.outages), 1);
+
+  Object.entries(countyLayers).forEach(([fips, { circle, meta }]) => {
+    const r = snapshot[fips];
+    const n = r ? r.outages : 0;
+    const radius = n > 0 ? Math.max(6, Math.min(28, 6 + Math.sqrt(n / 100))) : 0;
+
+    circle.setStyle({
+      fillColor: outageColour(n),
+      color: n > 0 ? '#ffffff44' : 'transparent',
+      fillOpacity: n > 0 ? 0.85 : 0,
+      weight: n > 0 ? 0.5 : 0,
+      radius,
+    });
+
+    if (n > 0) {
+      circle.setTooltipContent(`
+        <div class="tip-title">📍 ${meta.name} County, ${r.state}</div>
+        <div class="tip-row"><span class="tip-key">Customers Out</span><span class="tip-val" style="color:#f85149">${n.toLocaleString()}</span></div>
+        <div class="tip-row"><span class="tip-key">Median Outages</span><span class="tip-val">${(r.median||0).toLocaleString()}</span></div>
+        <div class="tip-row"><span class="tip-key">Time</span><span class="tip-val">${hourStr.slice(0,16).replace('T',' ')} UTC</span></div>
+      `);
+      heatPts.push([meta.lat, meta.lon, n / maxOut]);
+    }
+  });
+
+  // Heat overlay
+  if (heatLayer) { map.removeLayer(heatLayer); heatLayer = null; }
+  if (heatPts.length > 0) {
+    heatLayer = L.heatLayer(heatPts, {
+      radius: 40, blur: 30, maxZoom: 10,
+      gradient: { 0.0:'#00000000', 0.2:'#8b0000', 0.5:'#cc2200', 0.8:'#ff4400', 1.0:'#ff8800' },
+    }).addTo(map);
+  }
+
+  // County list sidebar
+  const top = countyEntries
+    .filter(r => r.outages > 0)
+    .sort((a,b) => b.outages - a.outages)
+    .slice(0, 30);
+
+  const maxTop = top.length > 0 ? top[0].outages : 1;
+  const listEl = document.getElementById('county-scroll');
+  listEl.innerHTML = top.map(r => `
+    <div class="county-item" onclick="flyTo('${r.fips}')">
+      <span class="county-name">${r.county}, ${r.state}</span>
+      <div class="county-bar-wrap"><div class="county-bar" style="width:${Math.round(r.outages/maxTop*100)}%"></div></div>
+      <span class="county-num">${r.outages >= 1000 ? (r.outages/1000).toFixed(1)+'k' : r.outages}</span>
+    </div>
+  `).join('') || '<div style="color:#8b949e;font-size:.75rem;padding:8px 0">No outages this hour</div>';
+}
+
+function flyTo(fips) {
+  const c = countyLayers[fips];
+  if (c) map.flyTo([c.meta.lat, c.meta.lon], 9, { duration: 1 });
+}
+
+// ─── UI Controls ───
+function buildUI() {
+  buildIndex();
+
+  document.getElementById('time-slider').addEventListener('input', e => {
+    updateFrame(+e.target.value);
+  });
+
+  document.getElementById('btn-prev').addEventListener('click', () => {
+    if (timeIdx > 0) updateFrame(timeIdx - 1);
+  });
+  document.getElementById('btn-next').addEventListener('click', () => {
+    if (timeIdx < hours.length - 1) updateFrame(timeIdx + 1);
+  });
+
+  document.getElementById('btn-play').addEventListener('click', togglePlay);
+}
+
+function togglePlay() {
+  playing = !playing;
+  const btn = document.getElementById('btn-play');
+  if (playing) {
+    btn.textContent = '⏸ Pause';
+    btn.classList.add('active');
+    step();
+  } else {
+    btn.textContent = '▶ Play';
+    btn.classList.remove('active');
+    clearTimeout(playTimer);
+  }
+}
+
+function step() {
+  if (!playing) return;
+  const speed = +document.getElementById('speed-select').value;
+  const next = timeIdx + 1;
+  if (next >= hours.length) {
+    updateFrame(0);           // loop
+  } else {
+    updateFrame(next);
+  }
+  playTimer = setTimeout(step, speed);
+}
+
+// ─── Kick off ───
+init();
+</script>
+</body>
+</html>
