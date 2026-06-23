@@ -1,0 +1,2246 @@
+{
+  "12001": {
+    "name": "Alachua",
+    "state": "FL",
+    "lat": 29.67,
+    "lon": -82.355
+  },
+  "12003": {
+    "name": "Baker",
+    "state": "FL",
+    "lat": 30.331,
+    "lon": -82.288
+  },
+  "12005": {
+    "name": "Bay",
+    "state": "FL",
+    "lat": 30.238,
+    "lon": -85.612
+  },
+  "12007": {
+    "name": "Bradford",
+    "state": "FL",
+    "lat": 29.944,
+    "lon": -82.168
+  },
+  "12009": {
+    "name": "Brevard",
+    "state": "FL",
+    "lat": 28.257,
+    "lon": -80.723
+  },
+  "12011": {
+    "name": "Broward",
+    "state": "FL",
+    "lat": 26.152,
+    "lon": -80.456
+  },
+  "12015": {
+    "name": "Charlotte",
+    "state": "FL",
+    "lat": 26.924,
+    "lon": -81.993
+  },
+  "12017": {
+    "name": "Citrus",
+    "state": "FL",
+    "lat": 28.844,
+    "lon": -82.524
+  },
+  "12019": {
+    "name": "Clay",
+    "state": "FL",
+    "lat": 29.984,
+    "lon": -81.852
+  },
+  "12021": {
+    "name": "Collier",
+    "state": "FL",
+    "lat": 26.114,
+    "lon": -81.39
+  },
+  "12023": {
+    "name": "Columbia",
+    "state": "FL",
+    "lat": 30.217,
+    "lon": -82.617
+  },
+  "12027": {
+    "name": "DeSoto",
+    "state": "FL",
+    "lat": 27.186,
+    "lon": -81.82
+  },
+  "12029": {
+    "name": "Dixie",
+    "state": "FL",
+    "lat": 29.589,
+    "lon": -83.163
+  },
+  "12031": {
+    "name": "Duval",
+    "state": "FL",
+    "lat": 30.335,
+    "lon": -81.656
+  },
+  "12033": {
+    "name": "Escambia",
+    "state": "FL",
+    "lat": 30.612,
+    "lon": -87.341
+  },
+  "12035": {
+    "name": "Flagler",
+    "state": "FL",
+    "lat": 29.475,
+    "lon": -81.282
+  },
+  "12037": {
+    "name": "Franklin",
+    "state": "FL",
+    "lat": 29.819,
+    "lon": -84.87
+  },
+  "12039": {
+    "name": "Gadsden",
+    "state": "FL",
+    "lat": 30.576,
+    "lon": -84.638
+  },
+  "12041": {
+    "name": "Gilchrist",
+    "state": "FL",
+    "lat": 29.723,
+    "lon": -82.799
+  },
+  "12043": {
+    "name": "Glades",
+    "state": "FL",
+    "lat": 26.956,
+    "lon": -81.209
+  },
+  "12045": {
+    "name": "Gulf",
+    "state": "FL",
+    "lat": 29.999,
+    "lon": -85.236
+  },
+  "12047": {
+    "name": "Hamilton",
+    "state": "FL",
+    "lat": 30.489,
+    "lon": -83.006
+  },
+  "12049": {
+    "name": "Hardee",
+    "state": "FL",
+    "lat": 27.492,
+    "lon": -81.821
+  },
+  "12051": {
+    "name": "Hendry",
+    "state": "FL",
+    "lat": 26.495,
+    "lon": -81.325
+  },
+  "12053": {
+    "name": "Hernando",
+    "state": "FL",
+    "lat": 28.558,
+    "lon": -82.467
+  },
+  "12055": {
+    "name": "Highlands",
+    "state": "FL",
+    "lat": 27.343,
+    "lon": -81.341
+  },
+  "12057": {
+    "name": "Hillsborough",
+    "state": "FL",
+    "lat": 27.904,
+    "lon": -82.349
+  },
+  "12061": {
+    "name": "Indian River",
+    "state": "FL",
+    "lat": 27.7,
+    "lon": -80.567
+  },
+  "12065": {
+    "name": "Jefferson",
+    "state": "FL",
+    "lat": 30.423,
+    "lon": -83.882
+  },
+  "12067": {
+    "name": "Lafayette",
+    "state": "FL",
+    "lat": 29.98,
+    "lon": -83.196
+  },
+  "12069": {
+    "name": "Lake",
+    "state": "FL",
+    "lat": 28.757,
+    "lon": -81.727
+  },
+  "12071": {
+    "name": "Lee",
+    "state": "FL",
+    "lat": 26.557,
+    "lon": -81.802
+  },
+  "12073": {
+    "name": "Leon",
+    "state": "FL",
+    "lat": 30.437,
+    "lon": -84.283
+  },
+  "12075": {
+    "name": "Levy",
+    "state": "FL",
+    "lat": 29.313,
+    "lon": -82.784
+  },
+  "12077": {
+    "name": "Liberty",
+    "state": "FL",
+    "lat": 30.24,
+    "lon": -84.874
+  },
+  "12079": {
+    "name": "Madison",
+    "state": "FL",
+    "lat": 30.393,
+    "lon": -83.47
+  },
+  "12081": {
+    "name": "Manatee",
+    "state": "FL",
+    "lat": 27.479,
+    "lon": -82.346
+  },
+  "12083": {
+    "name": "Marion",
+    "state": "FL",
+    "lat": 29.211,
+    "lon": -82.04
+  },
+  "12085": {
+    "name": "Martin",
+    "state": "FL",
+    "lat": 27.076,
+    "lon": -80.376
+  },
+  "12086": {
+    "name": "Miami-Dade",
+    "state": "FL",
+    "lat": 25.574,
+    "lon": -80.546
+  },
+  "12087": {
+    "name": "Monroe",
+    "state": "FL",
+    "lat": 24.559,
+    "lon": -81.766
+  },
+  "12089": {
+    "name": "Nassau",
+    "state": "FL",
+    "lat": 30.61,
+    "lon": -81.763
+  },
+  "12091": {
+    "name": "Okaloosa",
+    "state": "FL",
+    "lat": 30.658,
+    "lon": -86.593
+  },
+  "12093": {
+    "name": "Okeechobee",
+    "state": "FL",
+    "lat": 27.389,
+    "lon": -80.899
+  },
+  "12095": {
+    "name": "Orange",
+    "state": "FL",
+    "lat": 28.501,
+    "lon": -81.323
+  },
+  "12097": {
+    "name": "Osceola",
+    "state": "FL",
+    "lat": 28.062,
+    "lon": -81.146
+  },
+  "12099": {
+    "name": "Palm Beach",
+    "state": "FL",
+    "lat": 26.65,
+    "lon": -80.449
+  },
+  "12101": {
+    "name": "Pasco",
+    "state": "FL",
+    "lat": 28.297,
+    "lon": -82.433
+  },
+  "12103": {
+    "name": "Pinellas",
+    "state": "FL",
+    "lat": 27.878,
+    "lon": -82.726
+  },
+  "12105": {
+    "name": "Polk",
+    "state": "FL",
+    "lat": 27.952,
+    "lon": -81.697
+  },
+  "12107": {
+    "name": "Putnam",
+    "state": "FL",
+    "lat": 29.625,
+    "lon": -81.769
+  },
+  "12109": {
+    "name": "St. Johns",
+    "state": "FL",
+    "lat": 29.986,
+    "lon": -81.524
+  },
+  "12111": {
+    "name": "St. Lucie",
+    "state": "FL",
+    "lat": 27.384,
+    "lon": -80.44
+  },
+  "12113": {
+    "name": "Santa Rosa",
+    "state": "FL",
+    "lat": 30.68,
+    "lon": -87.022
+  },
+  "12115": {
+    "name": "Sarasota",
+    "state": "FL",
+    "lat": 27.179,
+    "lon": -82.355
+  },
+  "12117": {
+    "name": "Seminole",
+    "state": "FL",
+    "lat": 28.719,
+    "lon": -81.231
+  },
+  "12119": {
+    "name": "Sumter",
+    "state": "FL",
+    "lat": 28.713,
+    "lon": -82.075
+  },
+  "12121": {
+    "name": "Suwannee",
+    "state": "FL",
+    "lat": 30.194,
+    "lon": -83.007
+  },
+  "12123": {
+    "name": "Taylor",
+    "state": "FL",
+    "lat": 30.064,
+    "lon": -83.62
+  },
+  "12125": {
+    "name": "Union",
+    "state": "FL",
+    "lat": 30.038,
+    "lon": -82.374
+  },
+  "12127": {
+    "name": "Volusia",
+    "state": "FL",
+    "lat": 29.028,
+    "lon": -81.194
+  },
+  "12129": {
+    "name": "Wakulla",
+    "state": "FL",
+    "lat": 30.094,
+    "lon": -84.405
+  },
+  "12131": {
+    "name": "Walton",
+    "state": "FL",
+    "lat": 30.619,
+    "lon": -86.182
+  },
+  "12133": {
+    "name": "Washington",
+    "state": "FL",
+    "lat": 30.609,
+    "lon": -85.664
+  },
+  "13001": {
+    "name": "Appling",
+    "state": "GA",
+    "lat": 31.752,
+    "lon": -82.29
+  },
+  "13003": {
+    "name": "Atkinson",
+    "state": "GA",
+    "lat": 31.292,
+    "lon": -82.878
+  },
+  "13005": {
+    "name": "Bacon",
+    "state": "GA",
+    "lat": 31.551,
+    "lon": -82.453
+  },
+  "13007": {
+    "name": "Baker",
+    "state": "GA",
+    "lat": 31.325,
+    "lon": -84.439
+  },
+  "13009": {
+    "name": "Baldwin",
+    "state": "GA",
+    "lat": 33.068,
+    "lon": -83.244
+  },
+  "13011": {
+    "name": "Banks",
+    "state": "GA",
+    "lat": 34.351,
+    "lon": -83.497
+  },
+  "13013": {
+    "name": "Barrow",
+    "state": "GA",
+    "lat": 33.992,
+    "lon": -83.715
+  },
+  "13015": {
+    "name": "Bartow",
+    "state": "GA",
+    "lat": 34.243,
+    "lon": -84.839
+  },
+  "13017": {
+    "name": "Ben Hill",
+    "state": "GA",
+    "lat": 31.75,
+    "lon": -83.226
+  },
+  "13021": {
+    "name": "Bibb",
+    "state": "GA",
+    "lat": 32.808,
+    "lon": -83.694
+  },
+  "13025": {
+    "name": "Brantley",
+    "state": "GA",
+    "lat": 31.188,
+    "lon": -81.976
+  },
+  "13029": {
+    "name": "Bryan",
+    "state": "GA",
+    "lat": 31.978,
+    "lon": -81.434
+  },
+  "13031": {
+    "name": "Bulloch",
+    "state": "GA",
+    "lat": 32.393,
+    "lon": -81.742
+  },
+  "13033": {
+    "name": "Burke",
+    "state": "GA",
+    "lat": 33.053,
+    "lon": -81.985
+  },
+  "13039": {
+    "name": "Camden",
+    "state": "GA",
+    "lat": 30.875,
+    "lon": -81.628
+  },
+  "13043": {
+    "name": "Candler",
+    "state": "GA",
+    "lat": 32.404,
+    "lon": -82.072
+  },
+  "13045": {
+    "name": "Carroll",
+    "state": "GA",
+    "lat": 33.578,
+    "lon": -85.074
+  },
+  "13047": {
+    "name": "Catoosa",
+    "state": "GA",
+    "lat": 34.9,
+    "lon": -85.126
+  },
+  "13049": {
+    "name": "Charlton",
+    "state": "GA",
+    "lat": 30.787,
+    "lon": -82.131
+  },
+  "13051": {
+    "name": "Chatham",
+    "state": "GA",
+    "lat": 32.003,
+    "lon": -81.086
+  },
+  "13053": {
+    "name": "Chattahoochee",
+    "state": "GA",
+    "lat": 32.349,
+    "lon": -84.78
+  },
+  "13057": {
+    "name": "Cherokee",
+    "state": "GA",
+    "lat": 34.24,
+    "lon": -84.477
+  },
+  "13059": {
+    "name": "Clarke",
+    "state": "GA",
+    "lat": 33.958,
+    "lon": -83.374
+  },
+  "13063": {
+    "name": "Clayton",
+    "state": "GA",
+    "lat": 33.551,
+    "lon": -84.358
+  },
+  "13067": {
+    "name": "Cobb",
+    "state": "GA",
+    "lat": 33.94,
+    "lon": -84.578
+  },
+  "13069": {
+    "name": "Coffee",
+    "state": "GA",
+    "lat": 31.545,
+    "lon": -82.847
+  },
+  "13071": {
+    "name": "Colquitt",
+    "state": "GA",
+    "lat": 31.178,
+    "lon": -83.766
+  },
+  "13073": {
+    "name": "Columbia",
+    "state": "GA",
+    "lat": 33.531,
+    "lon": -82.194
+  },
+  "13077": {
+    "name": "Coweta",
+    "state": "GA",
+    "lat": 33.356,
+    "lon": -84.769
+  },
+  "13083": {
+    "name": "Dade",
+    "state": "GA",
+    "lat": 34.858,
+    "lon": -85.502
+  },
+  "13085": {
+    "name": "Dawson",
+    "state": "GA",
+    "lat": 34.432,
+    "lon": -84.171
+  },
+  "13087": {
+    "name": "Decatur",
+    "state": "GA",
+    "lat": 30.877,
+    "lon": -84.59
+  },
+  "13089": {
+    "name": "DeKalb",
+    "state": "GA",
+    "lat": 33.771,
+    "lon": -84.216
+  },
+  "13091": {
+    "name": "Dodge",
+    "state": "GA",
+    "lat": 32.173,
+    "lon": -83.173
+  },
+  "13095": {
+    "name": "Dougherty",
+    "state": "GA",
+    "lat": 31.534,
+    "lon": -84.215
+  },
+  "13097": {
+    "name": "Douglas",
+    "state": "GA",
+    "lat": 33.7,
+    "lon": -84.759
+  },
+  "13101": {
+    "name": "Echols",
+    "state": "GA",
+    "lat": 30.7,
+    "lon": -83.0
+  },
+  "13103": {
+    "name": "Effingham",
+    "state": "GA",
+    "lat": 32.379,
+    "lon": -81.34
+  },
+  "13109": {
+    "name": "Evans",
+    "state": "GA",
+    "lat": 32.177,
+    "lon": -82.126
+  },
+  "13111": {
+    "name": "Fannin",
+    "state": "GA",
+    "lat": 34.859,
+    "lon": -84.318
+  },
+  "13113": {
+    "name": "Fayette",
+    "state": "GA",
+    "lat": 33.411,
+    "lon": -84.498
+  },
+  "13115": {
+    "name": "Floyd",
+    "state": "GA",
+    "lat": 34.264,
+    "lon": -85.208
+  },
+  "13117": {
+    "name": "Forsyth",
+    "state": "GA",
+    "lat": 34.234,
+    "lon": -84.131
+  },
+  "13121": {
+    "name": "Fulton",
+    "state": "GA",
+    "lat": 33.794,
+    "lon": -84.467
+  },
+  "13123": {
+    "name": "Gilmer",
+    "state": "GA",
+    "lat": 34.69,
+    "lon": -84.452
+  },
+  "13127": {
+    "name": "Glynn",
+    "state": "GA",
+    "lat": 31.212,
+    "lon": -81.491
+  },
+  "13129": {
+    "name": "Gordon",
+    "state": "GA",
+    "lat": 34.494,
+    "lon": -84.878
+  },
+  "13133": {
+    "name": "Greene",
+    "state": "GA",
+    "lat": 33.578,
+    "lon": -83.163
+  },
+  "13135": {
+    "name": "Gwinnett",
+    "state": "GA",
+    "lat": 33.964,
+    "lon": -84.019
+  },
+  "13139": {
+    "name": "Hall",
+    "state": "GA",
+    "lat": 34.318,
+    "lon": -83.825
+  },
+  "13141": {
+    "name": "Hancock",
+    "state": "GA",
+    "lat": 33.27,
+    "lon": -83.003
+  },
+  "13143": {
+    "name": "Haralson",
+    "state": "GA",
+    "lat": 33.794,
+    "lon": -85.214
+  },
+  "13145": {
+    "name": "Harris",
+    "state": "GA",
+    "lat": 32.734,
+    "lon": -84.91
+  },
+  "13149": {
+    "name": "Heard",
+    "state": "GA",
+    "lat": 33.302,
+    "lon": -85.132
+  },
+  "13151": {
+    "name": "Henry",
+    "state": "GA",
+    "lat": 33.451,
+    "lon": -84.156
+  },
+  "13153": {
+    "name": "Houston",
+    "state": "GA",
+    "lat": 32.464,
+    "lon": -83.652
+  },
+  "13155": {
+    "name": "Irwin",
+    "state": "GA",
+    "lat": 31.596,
+    "lon": -83.273
+  },
+  "13157": {
+    "name": "Jackson",
+    "state": "GA",
+    "lat": 34.128,
+    "lon": -83.561
+  },
+  "13159": {
+    "name": "Jasper",
+    "state": "GA",
+    "lat": 33.309,
+    "lon": -83.689
+  },
+  "13161": {
+    "name": "Jeff Davis",
+    "state": "GA",
+    "lat": 31.806,
+    "lon": -82.637
+  },
+  "13163": {
+    "name": "Jefferson",
+    "state": "GA",
+    "lat": 33.049,
+    "lon": -82.413
+  },
+  "13165": {
+    "name": "Jenkins",
+    "state": "GA",
+    "lat": 32.688,
+    "lon": -81.964
+  },
+  "13169": {
+    "name": "Jones",
+    "state": "GA",
+    "lat": 33.025,
+    "lon": -83.563
+  },
+  "13171": {
+    "name": "Lamar",
+    "state": "GA",
+    "lat": 33.073,
+    "lon": -84.143
+  },
+  "13173": {
+    "name": "Lanier",
+    "state": "GA",
+    "lat": 31.037,
+    "lon": -83.065
+  },
+  "13175": {
+    "name": "Laurens",
+    "state": "GA",
+    "lat": 32.453,
+    "lon": -82.924
+  },
+  "13177": {
+    "name": "Lee",
+    "state": "GA",
+    "lat": 31.783,
+    "lon": -84.145
+  },
+  "13179": {
+    "name": "Liberty",
+    "state": "GA",
+    "lat": 31.84,
+    "lon": -81.464
+  },
+  "13181": {
+    "name": "Lincoln",
+    "state": "GA",
+    "lat": 33.799,
+    "lon": -82.473
+  },
+  "13183": {
+    "name": "Long",
+    "state": "GA",
+    "lat": 31.751,
+    "lon": -81.745
+  },
+  "13185": {
+    "name": "Lowndes",
+    "state": "GA",
+    "lat": 30.838,
+    "lon": -83.269
+  },
+  "13187": {
+    "name": "Lumpkin",
+    "state": "GA",
+    "lat": 34.573,
+    "lon": -83.994
+  },
+  "13191": {
+    "name": "McIntosh",
+    "state": "GA",
+    "lat": 31.519,
+    "lon": -81.39
+  },
+  "13193": {
+    "name": "Macon",
+    "state": "GA",
+    "lat": 32.356,
+    "lon": -84.041
+  },
+  "13197": {
+    "name": "Marion",
+    "state": "GA",
+    "lat": 32.355,
+    "lon": -84.534
+  },
+  "13199": {
+    "name": "Meriwether",
+    "state": "GA",
+    "lat": 33.043,
+    "lon": -84.686
+  },
+  "13205": {
+    "name": "Mitchell",
+    "state": "GA",
+    "lat": 31.218,
+    "lon": -84.193
+  },
+  "13213": {
+    "name": "Murray",
+    "state": "GA",
+    "lat": 34.791,
+    "lon": -84.742
+  },
+  "13215": {
+    "name": "Muscogee",
+    "state": "GA",
+    "lat": 32.51,
+    "lon": -84.875
+  },
+  "13217": {
+    "name": "Newton",
+    "state": "GA",
+    "lat": 33.556,
+    "lon": -83.851
+  },
+  "13219": {
+    "name": "Oconee",
+    "state": "GA",
+    "lat": 33.831,
+    "lon": -83.438
+  },
+  "13223": {
+    "name": "Paulding",
+    "state": "GA",
+    "lat": 33.919,
+    "lon": -84.873
+  },
+  "13225": {
+    "name": "Peach",
+    "state": "GA",
+    "lat": 32.535,
+    "lon": -83.822
+  },
+  "13227": {
+    "name": "Pickens",
+    "state": "GA",
+    "lat": 34.464,
+    "lon": -84.468
+  },
+  "13229": {
+    "name": "Pierce",
+    "state": "GA",
+    "lat": 31.361,
+    "lon": -82.217
+  },
+  "13243": {
+    "name": "Randolph",
+    "state": "GA",
+    "lat": 31.763,
+    "lon": -84.757
+  },
+  "13245": {
+    "name": "Richmond",
+    "state": "GA",
+    "lat": 33.359,
+    "lon": -82.073
+  },
+  "13247": {
+    "name": "Rockdale",
+    "state": "GA",
+    "lat": 33.651,
+    "lon": -84.023
+  },
+  "13249": {
+    "name": "Schley",
+    "state": "GA",
+    "lat": 32.263,
+    "lon": -84.308
+  },
+  "13255": {
+    "name": "Spalding",
+    "state": "GA",
+    "lat": 33.261,
+    "lon": -84.291
+  },
+  "13259": {
+    "name": "Stewart",
+    "state": "GA",
+    "lat": 32.074,
+    "lon": -84.834
+  },
+  "13261": {
+    "name": "Sumter",
+    "state": "GA",
+    "lat": 32.045,
+    "lon": -84.197
+  },
+  "13263": {
+    "name": "Talbot",
+    "state": "GA",
+    "lat": 32.705,
+    "lon": -84.531
+  },
+  "13267": {
+    "name": "Tattnall",
+    "state": "GA",
+    "lat": 32.041,
+    "lon": -82.072
+  },
+  "13269": {
+    "name": "Taylor",
+    "state": "GA",
+    "lat": 32.546,
+    "lon": -84.257
+  },
+  "13271": {
+    "name": "Telfair",
+    "state": "GA",
+    "lat": 31.924,
+    "lon": -82.937
+  },
+  "13275": {
+    "name": "Thomas",
+    "state": "GA",
+    "lat": 30.852,
+    "lon": -83.906
+  },
+  "13277": {
+    "name": "Tift",
+    "state": "GA",
+    "lat": 31.465,
+    "lon": -83.521
+  },
+  "13279": {
+    "name": "Toombs",
+    "state": "GA",
+    "lat": 32.124,
+    "lon": -82.322
+  },
+  "13285": {
+    "name": "Troup",
+    "state": "GA",
+    "lat": 33.031,
+    "lon": -85.032
+  },
+  "13287": {
+    "name": "Turner",
+    "state": "GA",
+    "lat": 31.716,
+    "lon": -83.622
+  },
+  "13291": {
+    "name": "Union",
+    "state": "GA",
+    "lat": 34.834,
+    "lon": -83.987
+  },
+  "13293": {
+    "name": "Upson",
+    "state": "GA",
+    "lat": 32.887,
+    "lon": -84.289
+  },
+  "13295": {
+    "name": "Walker",
+    "state": "GA",
+    "lat": 34.72,
+    "lon": -85.298
+  },
+  "13297": {
+    "name": "Walton",
+    "state": "GA",
+    "lat": 33.776,
+    "lon": -83.726
+  },
+  "13299": {
+    "name": "Ware",
+    "state": "GA",
+    "lat": 31.05,
+    "lon": -82.44
+  },
+  "13301": {
+    "name": "Warren",
+    "state": "GA",
+    "lat": 33.411,
+    "lon": -82.68
+  },
+  "13303": {
+    "name": "Washington",
+    "state": "GA",
+    "lat": 32.969,
+    "lon": -82.804
+  },
+  "13305": {
+    "name": "Wayne",
+    "state": "GA",
+    "lat": 31.551,
+    "lon": -81.889
+  },
+  "13307": {
+    "name": "Webster",
+    "state": "GA",
+    "lat": 32.037,
+    "lon": -84.557
+  },
+  "13313": {
+    "name": "Whitfield",
+    "state": "GA",
+    "lat": 34.79,
+    "lon": -84.968
+  },
+  "13315": {
+    "name": "Wilcox",
+    "state": "GA",
+    "lat": 31.966,
+    "lon": -83.427
+  },
+  "13319": {
+    "name": "Wilkinson",
+    "state": "GA",
+    "lat": 32.801,
+    "lon": -83.161
+  },
+  "13321": {
+    "name": "Worth",
+    "state": "GA",
+    "lat": 31.56,
+    "lon": -83.853
+  },
+  "45003": {
+    "name": "Aiken",
+    "state": "SC",
+    "lat": 33.543,
+    "lon": -81.72
+  },
+  "45005": {
+    "name": "Allendale",
+    "state": "SC",
+    "lat": 32.987,
+    "lon": -81.38
+  },
+  "45009": {
+    "name": "Bamberg",
+    "state": "SC",
+    "lat": 33.218,
+    "lon": -81.04
+  },
+  "45011": {
+    "name": "Barnwell",
+    "state": "SC",
+    "lat": 33.258,
+    "lon": -81.444
+  },
+  "45013": {
+    "name": "Beaufort",
+    "state": "SC",
+    "lat": 32.365,
+    "lon": -80.695
+  },
+  "45015": {
+    "name": "Berkeley",
+    "state": "SC",
+    "lat": 33.199,
+    "lon": -79.963
+  },
+  "45019": {
+    "name": "Charleston",
+    "state": "SC",
+    "lat": 32.776,
+    "lon": -79.958
+  },
+  "45027": {
+    "name": "Clarendon",
+    "state": "SC",
+    "lat": 33.671,
+    "lon": -80.215
+  },
+  "45029": {
+    "name": "Colleton",
+    "state": "SC",
+    "lat": 32.866,
+    "lon": -80.62
+  },
+  "45031": {
+    "name": "Darlington",
+    "state": "SC",
+    "lat": 34.321,
+    "lon": -79.968
+  },
+  "45033": {
+    "name": "Dillon",
+    "state": "SC",
+    "lat": 34.39,
+    "lon": -79.368
+  },
+  "45035": {
+    "name": "Dorchester",
+    "state": "SC",
+    "lat": 33.086,
+    "lon": -80.402
+  },
+  "45037": {
+    "name": "Edgefield",
+    "state": "SC",
+    "lat": 33.775,
+    "lon": -81.96
+  },
+  "45041": {
+    "name": "Florence",
+    "state": "SC",
+    "lat": 34.025,
+    "lon": -79.733
+  },
+  "45043": {
+    "name": "Georgetown",
+    "state": "SC",
+    "lat": 33.396,
+    "lon": -79.281
+  },
+  "45049": {
+    "name": "Hampton",
+    "state": "SC",
+    "lat": 32.76,
+    "lon": -81.113
+  },
+  "45051": {
+    "name": "Horry",
+    "state": "SC",
+    "lat": 33.913,
+    "lon": -78.947
+  },
+  "45053": {
+    "name": "Jasper",
+    "state": "SC",
+    "lat": 32.404,
+    "lon": -81.048
+  },
+  "45057": {
+    "name": "Lancaster",
+    "state": "SC",
+    "lat": 34.686,
+    "lon": -80.7
+  },
+  "45061": {
+    "name": "Lee",
+    "state": "SC",
+    "lat": 34.163,
+    "lon": -80.248
+  },
+  "45063": {
+    "name": "Lexington",
+    "state": "SC",
+    "lat": 33.94,
+    "lon": -81.257
+  },
+  "45067": {
+    "name": "Marion",
+    "state": "SC",
+    "lat": 34.181,
+    "lon": -79.39
+  },
+  "45075": {
+    "name": "Orangeburg",
+    "state": "SC",
+    "lat": 33.441,
+    "lon": -80.816
+  },
+  "45079": {
+    "name": "Richland",
+    "state": "SC",
+    "lat": 34.023,
+    "lon": -80.906
+  },
+  "45085": {
+    "name": "Sumter",
+    "state": "SC",
+    "lat": 33.919,
+    "lon": -80.372
+  },
+  "45089": {
+    "name": "Williamsburg",
+    "state": "SC",
+    "lat": 33.624,
+    "lon": -79.849
+  },
+  "37001": {
+    "name": "Alamance",
+    "state": "NC",
+    "lat": 36.047,
+    "lon": -79.395
+  },
+  "37007": {
+    "name": "Anson",
+    "state": "NC",
+    "lat": 35.011,
+    "lon": -80.104
+  },
+  "37009": {
+    "name": "Ashe",
+    "state": "NC",
+    "lat": 36.432,
+    "lon": -81.496
+  },
+  "37013": {
+    "name": "Beaufort",
+    "state": "NC",
+    "lat": 35.455,
+    "lon": -76.992
+  },
+  "37015": {
+    "name": "Bertie",
+    "state": "NC",
+    "lat": 36.066,
+    "lon": -76.997
+  },
+  "37017": {
+    "name": "Bladen",
+    "state": "NC",
+    "lat": 34.609,
+    "lon": -78.556
+  },
+  "37019": {
+    "name": "Brunswick",
+    "state": "NC",
+    "lat": 33.993,
+    "lon": -78.265
+  },
+  "37029": {
+    "name": "Camden",
+    "state": "NC",
+    "lat": 36.332,
+    "lon": -76.178
+  },
+  "37031": {
+    "name": "Carteret",
+    "state": "NC",
+    "lat": 34.843,
+    "lon": -76.509
+  },
+  "37033": {
+    "name": "Caswell",
+    "state": "NC",
+    "lat": 36.394,
+    "lon": -79.329
+  },
+  "37037": {
+    "name": "Chatham",
+    "state": "NC",
+    "lat": 35.705,
+    "lon": -79.254
+  },
+  "37039": {
+    "name": "Cherokee",
+    "state": "NC",
+    "lat": 35.137,
+    "lon": -84.034
+  },
+  "37041": {
+    "name": "Chowan",
+    "state": "NC",
+    "lat": 36.113,
+    "lon": -76.641
+  },
+  "37047": {
+    "name": "Columbus",
+    "state": "NC",
+    "lat": 34.272,
+    "lon": -78.643
+  },
+  "37049": {
+    "name": "Craven",
+    "state": "NC",
+    "lat": 35.11,
+    "lon": -77.071
+  },
+  "37051": {
+    "name": "Cumberland",
+    "state": "NC",
+    "lat": 35.044,
+    "lon": -78.843
+  },
+  "37053": {
+    "name": "Currituck",
+    "state": "NC",
+    "lat": 36.4,
+    "lon": -75.924
+  },
+  "37055": {
+    "name": "Dare",
+    "state": "NC",
+    "lat": 35.751,
+    "lon": -75.742
+  },
+  "37057": {
+    "name": "Davidson",
+    "state": "NC",
+    "lat": 35.789,
+    "lon": -80.212
+  },
+  "37061": {
+    "name": "Duplin",
+    "state": "NC",
+    "lat": 34.929,
+    "lon": -77.943
+  },
+  "37063": {
+    "name": "Durham",
+    "state": "NC",
+    "lat": 35.988,
+    "lon": -78.902
+  },
+  "37065": {
+    "name": "Edgecombe",
+    "state": "NC",
+    "lat": 35.906,
+    "lon": -77.598
+  },
+  "37067": {
+    "name": "Forsyth",
+    "state": "NC",
+    "lat": 36.133,
+    "lon": -80.245
+  },
+  "37069": {
+    "name": "Franklin",
+    "state": "NC",
+    "lat": 36.08,
+    "lon": -78.295
+  },
+  "37073": {
+    "name": "Gates",
+    "state": "NC",
+    "lat": 36.437,
+    "lon": -76.698
+  },
+  "37077": {
+    "name": "Granville",
+    "state": "NC",
+    "lat": 36.299,
+    "lon": -78.658
+  },
+  "37079": {
+    "name": "Greene",
+    "state": "NC",
+    "lat": 35.477,
+    "lon": -77.671
+  },
+  "37081": {
+    "name": "Guilford",
+    "state": "NC",
+    "lat": 36.075,
+    "lon": -79.787
+  },
+  "37083": {
+    "name": "Halifax",
+    "state": "NC",
+    "lat": 36.246,
+    "lon": -77.663
+  },
+  "37085": {
+    "name": "Harnett",
+    "state": "NC",
+    "lat": 35.367,
+    "lon": -78.872
+  },
+  "37091": {
+    "name": "Hertford",
+    "state": "NC",
+    "lat": 36.351,
+    "lon": -76.975
+  },
+  "37093": {
+    "name": "Hoke",
+    "state": "NC",
+    "lat": 35.017,
+    "lon": -79.273
+  },
+  "37095": {
+    "name": "Hyde",
+    "state": "NC",
+    "lat": 35.406,
+    "lon": -76.159
+  },
+  "37101": {
+    "name": "Johnston",
+    "state": "NC",
+    "lat": 35.51,
+    "lon": -78.363
+  },
+  "37103": {
+    "name": "Jones",
+    "state": "NC",
+    "lat": 34.965,
+    "lon": -77.369
+  },
+  "37105": {
+    "name": "Lee",
+    "state": "NC",
+    "lat": 35.476,
+    "lon": -79.168
+  },
+  "37107": {
+    "name": "Lenoir",
+    "state": "NC",
+    "lat": 35.261,
+    "lon": -77.632
+  },
+  "37117": {
+    "name": "Martin",
+    "state": "NC",
+    "lat": 35.84,
+    "lon": -77.103
+  },
+  "37123": {
+    "name": "Montgomery",
+    "state": "NC",
+    "lat": 35.33,
+    "lon": -79.892
+  },
+  "37125": {
+    "name": "Moore",
+    "state": "NC",
+    "lat": 35.31,
+    "lon": -79.497
+  },
+  "37127": {
+    "name": "Nash",
+    "state": "NC",
+    "lat": 35.974,
+    "lon": -77.978
+  },
+  "37129": {
+    "name": "New Hanover",
+    "state": "NC",
+    "lat": 34.191,
+    "lon": -77.87
+  },
+  "37131": {
+    "name": "Northampton",
+    "state": "NC",
+    "lat": 36.404,
+    "lon": -77.396
+  },
+  "37133": {
+    "name": "Onslow",
+    "state": "NC",
+    "lat": 34.758,
+    "lon": -77.416
+  },
+  "37135": {
+    "name": "Orange",
+    "state": "NC",
+    "lat": 36.063,
+    "lon": -79.118
+  },
+  "37137": {
+    "name": "Pamlico",
+    "state": "NC",
+    "lat": 35.144,
+    "lon": -76.663
+  },
+  "37139": {
+    "name": "Pasquotank",
+    "state": "NC",
+    "lat": 36.261,
+    "lon": -76.245
+  },
+  "37141": {
+    "name": "Pender",
+    "state": "NC",
+    "lat": 34.513,
+    "lon": -77.898
+  },
+  "37143": {
+    "name": "Perquimans",
+    "state": "NC",
+    "lat": 36.175,
+    "lon": -76.415
+  },
+  "37145": {
+    "name": "Person",
+    "state": "NC",
+    "lat": 36.391,
+    "lon": -78.983
+  },
+  "37147": {
+    "name": "Pitt",
+    "state": "NC",
+    "lat": 35.592,
+    "lon": -77.372
+  },
+  "37151": {
+    "name": "Randolph",
+    "state": "NC",
+    "lat": 35.721,
+    "lon": -79.807
+  },
+  "37153": {
+    "name": "Richmond",
+    "state": "NC",
+    "lat": 35.003,
+    "lon": -79.745
+  },
+  "37155": {
+    "name": "Robeson",
+    "state": "NC",
+    "lat": 34.641,
+    "lon": -79.1
+  },
+  "37157": {
+    "name": "Rockingham",
+    "state": "NC",
+    "lat": 36.398,
+    "lon": -79.773
+  },
+  "37163": {
+    "name": "Sampson",
+    "state": "NC",
+    "lat": 34.99,
+    "lon": -78.362
+  },
+  "37165": {
+    "name": "Scotland",
+    "state": "NC",
+    "lat": 34.994,
+    "lon": -79.487
+  },
+  "37167": {
+    "name": "Stanly",
+    "state": "NC",
+    "lat": 35.306,
+    "lon": -80.253
+  },
+  "37169": {
+    "name": "Stokes",
+    "state": "NC",
+    "lat": 36.399,
+    "lon": -80.235
+  },
+  "37177": {
+    "name": "Tyrrell",
+    "state": "NC",
+    "lat": 35.855,
+    "lon": -76.023
+  },
+  "37181": {
+    "name": "Vance",
+    "state": "NC",
+    "lat": 36.362,
+    "lon": -78.408
+  },
+  "37183": {
+    "name": "Wake",
+    "state": "NC",
+    "lat": 35.788,
+    "lon": -78.659
+  },
+  "37185": {
+    "name": "Warren",
+    "state": "NC",
+    "lat": 36.394,
+    "lon": -78.099
+  },
+  "37187": {
+    "name": "Washington",
+    "state": "NC",
+    "lat": 35.847,
+    "lon": -76.669
+  },
+  "37189": {
+    "name": "Watauga",
+    "state": "NC",
+    "lat": 36.235,
+    "lon": -81.7
+  },
+  "37191": {
+    "name": "Wayne",
+    "state": "NC",
+    "lat": 35.369,
+    "lon": -77.977
+  },
+  "37193": {
+    "name": "Wilkes",
+    "state": "NC",
+    "lat": 36.147,
+    "lon": -81.157
+  },
+  "37195": {
+    "name": "Wilson",
+    "state": "NC",
+    "lat": 35.705,
+    "lon": -77.919
+  },
+  "37197": {
+    "name": "Yadkin",
+    "state": "NC",
+    "lat": 36.161,
+    "lon": -80.661
+  },
+  "51001": {
+    "name": "Accomack",
+    "state": "VA",
+    "lat": 37.767,
+    "lon": -75.736
+  },
+  "51003": {
+    "name": "Albemarle",
+    "state": "VA",
+    "lat": 37.983,
+    "lon": -78.558
+  },
+  "51007": {
+    "name": "Amelia",
+    "state": "VA",
+    "lat": 37.34,
+    "lon": -77.972
+  },
+  "51009": {
+    "name": "Amherst",
+    "state": "VA",
+    "lat": 37.608,
+    "lon": -79.144
+  },
+  "51011": {
+    "name": "Appomattox",
+    "state": "VA",
+    "lat": 37.374,
+    "lon": -78.808
+  },
+  "51013": {
+    "name": "Arlington",
+    "state": "VA",
+    "lat": 38.879,
+    "lon": -77.101
+  },
+  "51015": {
+    "name": "Augusta",
+    "state": "VA",
+    "lat": 38.175,
+    "lon": -79.145
+  },
+  "51017": {
+    "name": "Bath",
+    "state": "VA",
+    "lat": 38.059,
+    "lon": -79.737
+  },
+  "51019": {
+    "name": "Bedford",
+    "state": "VA",
+    "lat": 37.314,
+    "lon": -79.523
+  },
+  "51021": {
+    "name": "Bland",
+    "state": "VA",
+    "lat": 37.131,
+    "lon": -81.127
+  },
+  "51023": {
+    "name": "Botetourt",
+    "state": "VA",
+    "lat": 37.549,
+    "lon": -79.817
+  },
+  "51025": {
+    "name": "Brunswick",
+    "state": "VA",
+    "lat": 36.763,
+    "lon": -77.84
+  },
+  "51027": {
+    "name": "Buchanan",
+    "state": "VA",
+    "lat": 37.268,
+    "lon": -81.994
+  },
+  "51029": {
+    "name": "Buckingham",
+    "state": "VA",
+    "lat": 37.552,
+    "lon": -78.522
+  },
+  "51031": {
+    "name": "Campbell",
+    "state": "VA",
+    "lat": 37.196,
+    "lon": -79.096
+  },
+  "51033": {
+    "name": "Caroline",
+    "state": "VA",
+    "lat": 37.973,
+    "lon": -77.336
+  },
+  "51035": {
+    "name": "Carroll",
+    "state": "VA",
+    "lat": 36.731,
+    "lon": -80.728
+  },
+  "51036": {
+    "name": "Charles City",
+    "state": "VA",
+    "lat": 37.35,
+    "lon": -77.064
+  },
+  "51037": {
+    "name": "Charlotte",
+    "state": "VA",
+    "lat": 37.005,
+    "lon": -78.672
+  },
+  "51041": {
+    "name": "Chesterfield",
+    "state": "VA",
+    "lat": 37.376,
+    "lon": -77.621
+  },
+  "51045": {
+    "name": "Craig",
+    "state": "VA",
+    "lat": 37.475,
+    "lon": -80.216
+  },
+  "51047": {
+    "name": "Culpeper",
+    "state": "VA",
+    "lat": 38.481,
+    "lon": -77.989
+  },
+  "51049": {
+    "name": "Cumberland",
+    "state": "VA",
+    "lat": 37.507,
+    "lon": -78.252
+  },
+  "51051": {
+    "name": "Dickenson",
+    "state": "VA",
+    "lat": 37.132,
+    "lon": -82.351
+  },
+  "51053": {
+    "name": "Dinwiddie",
+    "state": "VA",
+    "lat": 37.072,
+    "lon": -77.627
+  },
+  "51057": {
+    "name": "Essex",
+    "state": "VA",
+    "lat": 37.929,
+    "lon": -76.949
+  },
+  "51061": {
+    "name": "Fauquier",
+    "state": "VA",
+    "lat": 38.729,
+    "lon": -77.815
+  },
+  "51063": {
+    "name": "Floyd",
+    "state": "VA",
+    "lat": 36.93,
+    "lon": -80.329
+  },
+  "51065": {
+    "name": "Fluvanna",
+    "state": "VA",
+    "lat": 37.845,
+    "lon": -78.284
+  },
+  "51067": {
+    "name": "Franklin",
+    "state": "VA",
+    "lat": 36.981,
+    "lon": -79.879
+  },
+  "51069": {
+    "name": "Frederick",
+    "state": "VA",
+    "lat": 39.213,
+    "lon": -78.269
+  },
+  "51071": {
+    "name": "Giles",
+    "state": "VA",
+    "lat": 37.318,
+    "lon": -80.694
+  },
+  "51073": {
+    "name": "Gloucester",
+    "state": "VA",
+    "lat": 37.407,
+    "lon": -76.527
+  },
+  "51075": {
+    "name": "Goochland",
+    "state": "VA",
+    "lat": 37.712,
+    "lon": -77.9
+  },
+  "51077": {
+    "name": "Grayson",
+    "state": "VA",
+    "lat": 36.654,
+    "lon": -81.204
+  },
+  "51079": {
+    "name": "Greene",
+    "state": "VA",
+    "lat": 38.302,
+    "lon": -78.471
+  },
+  "51081": {
+    "name": "Greensville",
+    "state": "VA",
+    "lat": 36.67,
+    "lon": -77.557
+  },
+  "51085": {
+    "name": "Hanover",
+    "state": "VA",
+    "lat": 37.763,
+    "lon": -77.494
+  },
+  "51087": {
+    "name": "Henrico",
+    "state": "VA",
+    "lat": 37.581,
+    "lon": -77.397
+  },
+  "51089": {
+    "name": "Henry",
+    "state": "VA",
+    "lat": 36.681,
+    "lon": -79.888
+  },
+  "51091": {
+    "name": "Highland",
+    "state": "VA",
+    "lat": 38.381,
+    "lon": -79.559
+  },
+  "51093": {
+    "name": "Isle of Wight",
+    "state": "VA",
+    "lat": 36.899,
+    "lon": -76.7
+  },
+  "51095": {
+    "name": "James City",
+    "state": "VA",
+    "lat": 37.326,
+    "lon": -76.777
+  },
+  "51097": {
+    "name": "King and Queen",
+    "state": "VA",
+    "lat": 37.71,
+    "lon": -76.875
+  },
+  "51099": {
+    "name": "King George",
+    "state": "VA",
+    "lat": 38.272,
+    "lon": -77.13
+  },
+  "51101": {
+    "name": "King William",
+    "state": "VA",
+    "lat": 37.694,
+    "lon": -77.083
+  },
+  "51103": {
+    "name": "Lancaster",
+    "state": "VA",
+    "lat": 37.699,
+    "lon": -76.439
+  },
+  "51107": {
+    "name": "Loudoun",
+    "state": "VA",
+    "lat": 39.087,
+    "lon": -77.638
+  },
+  "51109": {
+    "name": "Louisa",
+    "state": "VA",
+    "lat": 37.997,
+    "lon": -77.957
+  },
+  "51111": {
+    "name": "Lunenburg",
+    "state": "VA",
+    "lat": 36.937,
+    "lon": -78.248
+  },
+  "51113": {
+    "name": "Madison",
+    "state": "VA",
+    "lat": 38.412,
+    "lon": -78.27
+  },
+  "51115": {
+    "name": "Mathews",
+    "state": "VA",
+    "lat": 37.437,
+    "lon": -76.329
+  },
+  "51117": {
+    "name": "Mecklenburg",
+    "state": "VA",
+    "lat": 36.681,
+    "lon": -78.341
+  },
+  "51119": {
+    "name": "Middlesex",
+    "state": "VA",
+    "lat": 37.602,
+    "lon": -76.581
+  },
+  "51121": {
+    "name": "Montgomery",
+    "state": "VA",
+    "lat": 37.174,
+    "lon": -80.388
+  },
+  "51125": {
+    "name": "Nelson",
+    "state": "VA",
+    "lat": 37.801,
+    "lon": -78.879
+  },
+  "51127": {
+    "name": "New Kent",
+    "state": "VA",
+    "lat": 37.52,
+    "lon": -77.025
+  },
+  "51131": {
+    "name": "Northampton",
+    "state": "VA",
+    "lat": 37.358,
+    "lon": -75.937
+  },
+  "51133": {
+    "name": "Northumberland",
+    "state": "VA",
+    "lat": 37.868,
+    "lon": -76.441
+  },
+  "51135": {
+    "name": "Nottoway",
+    "state": "VA",
+    "lat": 37.143,
+    "lon": -77.993
+  },
+  "51137": {
+    "name": "Orange",
+    "state": "VA",
+    "lat": 38.245,
+    "lon": -78.013
+  },
+  "51139": {
+    "name": "Page",
+    "state": "VA",
+    "lat": 38.618,
+    "lon": -78.487
+  },
+  "51141": {
+    "name": "Patrick",
+    "state": "VA",
+    "lat": 36.679,
+    "lon": -80.28
+  },
+  "51145": {
+    "name": "Powhatan",
+    "state": "VA",
+    "lat": 37.547,
+    "lon": -77.919
+  },
+  "51147": {
+    "name": "Prince Edward",
+    "state": "VA",
+    "lat": 37.22,
+    "lon": -78.445
+  },
+  "51149": {
+    "name": "Prince George",
+    "state": "VA",
+    "lat": 37.207,
+    "lon": -77.161
+  },
+  "51153": {
+    "name": "Prince William",
+    "state": "VA",
+    "lat": 38.706,
+    "lon": -77.478
+  },
+  "51155": {
+    "name": "Pulaski",
+    "state": "VA",
+    "lat": 37.054,
+    "lon": -80.715
+  },
+  "51157": {
+    "name": "Rappahannock",
+    "state": "VA",
+    "lat": 38.68,
+    "lon": -78.157
+  },
+  "51165": {
+    "name": "Rockingham",
+    "state": "VA",
+    "lat": 38.513,
+    "lon": -78.876
+  },
+  "51171": {
+    "name": "Shenandoah",
+    "state": "VA",
+    "lat": 38.851,
+    "lon": -78.572
+  },
+  "51173": {
+    "name": "Smyth",
+    "state": "VA",
+    "lat": 36.871,
+    "lon": -81.543
+  },
+  "51175": {
+    "name": "Southampton",
+    "state": "VA",
+    "lat": 36.731,
+    "lon": -77.098
+  },
+  "51177": {
+    "name": "Spotsylvania",
+    "state": "VA",
+    "lat": 38.175,
+    "lon": -77.659
+  },
+  "51179": {
+    "name": "Stafford",
+    "state": "VA",
+    "lat": 38.42,
+    "lon": -77.444
+  },
+  "51181": {
+    "name": "Surry",
+    "state": "VA",
+    "lat": 37.121,
+    "lon": -76.874
+  },
+  "51183": {
+    "name": "Sussex",
+    "state": "VA",
+    "lat": 36.921,
+    "lon": -77.269
+  },
+  "51185": {
+    "name": "Tazewell",
+    "state": "VA",
+    "lat": 37.112,
+    "lon": -81.567
+  },
+  "51193": {
+    "name": "Westmoreland",
+    "state": "VA",
+    "lat": 38.12,
+    "lon": -76.809
+  },
+  "51197": {
+    "name": "Wythe",
+    "state": "VA",
+    "lat": 36.924,
+    "lon": -81.082
+  },
+  "51199": {
+    "name": "York",
+    "state": "VA",
+    "lat": 37.22,
+    "lon": -76.56
+  },
+  "51510": {
+    "name": "Alexandria",
+    "state": "VA",
+    "lat": 38.804,
+    "lon": -77.047
+  },
+  "51550": {
+    "name": "Chesapeake",
+    "state": "VA",
+    "lat": 36.769,
+    "lon": -76.287
+  },
+  "51570": {
+    "name": "Colonial Heights",
+    "state": "VA",
+    "lat": 37.263,
+    "lon": -77.402
+  },
+  "51595": {
+    "name": "Emporia",
+    "state": "VA",
+    "lat": 36.694,
+    "lon": -77.54
+  },
+  "51600": {
+    "name": "Fairfax City",
+    "state": "VA",
+    "lat": 38.851,
+    "lon": -77.302
+  },
+  "51650": {
+    "name": "Hampton",
+    "state": "VA",
+    "lat": 37.04,
+    "lon": -76.363
+  },
+  "51670": {
+    "name": "Hopewell",
+    "state": "VA",
+    "lat": 37.304,
+    "lon": -77.287
+  },
+  "51680": {
+    "name": "Lynchburg",
+    "state": "VA",
+    "lat": 37.414,
+    "lon": -79.142
+  },
+  "51685": {
+    "name": "Manassas Park",
+    "state": "VA",
+    "lat": 38.77,
+    "lon": -77.441
+  },
+  "51700": {
+    "name": "Newport News",
+    "state": "VA",
+    "lat": 37.076,
+    "lon": -76.521
+  },
+  "51710": {
+    "name": "Norfolk",
+    "state": "VA",
+    "lat": 36.886,
+    "lon": -76.259
+  },
+  "51730": {
+    "name": "Petersburg",
+    "state": "VA",
+    "lat": 37.228,
+    "lon": -77.401
+  },
+  "51735": {
+    "name": "Poquoson",
+    "state": "VA",
+    "lat": 37.123,
+    "lon": -76.346
+  },
+  "51740": {
+    "name": "Portsmouth",
+    "state": "VA",
+    "lat": 36.836,
+    "lon": -76.299
+  },
+  "51760": {
+    "name": "Richmond",
+    "state": "VA",
+    "lat": 37.554,
+    "lon": -77.436
+  },
+  "51770": {
+    "name": "Roanoke",
+    "state": "VA",
+    "lat": 37.271,
+    "lon": -79.941
+  },
+  "51800": {
+    "name": "Suffolk",
+    "state": "VA",
+    "lat": 36.728,
+    "lon": -76.589
+  },
+  "51810": {
+    "name": "Virginia Beach",
+    "state": "VA",
+    "lat": 36.853,
+    "lon": -75.978
+  },
+  "51820": {
+    "name": "Waynesboro",
+    "state": "VA",
+    "lat": 38.068,
+    "lon": -78.889
+  },
+  "51830": {
+    "name": "Williamsburg",
+    "state": "VA",
+    "lat": 37.271,
+    "lon": -76.707
+  }
+}

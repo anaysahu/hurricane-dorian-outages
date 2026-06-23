@@ -1,0 +1,371 @@
+[
+  {
+    "id": "FL-001",
+    "name": "Riviera Beach",
+    "state": "FL",
+    "lat": 26.778,
+    "lon": -80.058,
+    "voltage_kv": 500,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-002",
+    "name": "Martin",
+    "state": "FL",
+    "lat": 27.073,
+    "lon": -80.375,
+    "voltage_kv": 345,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-003",
+    "name": "Corbett",
+    "state": "FL",
+    "lat": 26.69,
+    "lon": -80.247,
+    "voltage_kv": 500,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-004",
+    "name": "Port Everglades",
+    "state": "FL",
+    "lat": 26.086,
+    "lon": -80.117,
+    "voltage_kv": 345,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-005",
+    "name": "Cape Canaveral",
+    "state": "FL",
+    "lat": 28.435,
+    "lon": -80.588,
+    "voltage_kv": 230,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-006",
+    "name": "St. Johns River",
+    "state": "FL",
+    "lat": 29.997,
+    "lon": -81.455,
+    "voltage_kv": 230,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-007",
+    "name": "Duval",
+    "state": "FL",
+    "lat": 30.332,
+    "lon": -81.655,
+    "voltage_kv": 230,
+    "utility": "JEA"
+  },
+  {
+    "id": "FL-008",
+    "name": "Flagler Beach",
+    "state": "FL",
+    "lat": 29.473,
+    "lon": -81.128,
+    "voltage_kv": 115,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-009",
+    "name": "Daytona",
+    "state": "FL",
+    "lat": 29.212,
+    "lon": -81.024,
+    "voltage_kv": 230,
+    "utility": "FPL"
+  },
+  {
+    "id": "FL-010",
+    "name": "Melbourne",
+    "state": "FL",
+    "lat": 28.084,
+    "lon": -80.631,
+    "voltage_kv": 230,
+    "utility": "FPL"
+  },
+  {
+    "id": "GA-001",
+    "name": "Brier Creek",
+    "state": "GA",
+    "lat": 32.478,
+    "lon": -81.789,
+    "voltage_kv": 500,
+    "utility": "Georgia Power"
+  },
+  {
+    "id": "GA-002",
+    "name": "Brunswick",
+    "state": "GA",
+    "lat": 31.149,
+    "lon": -81.491,
+    "voltage_kv": 230,
+    "utility": "Georgia Power"
+  },
+  {
+    "id": "GA-003",
+    "name": "Savannah",
+    "state": "GA",
+    "lat": 32.08,
+    "lon": -81.099,
+    "voltage_kv": 500,
+    "utility": "Georgia Power"
+  },
+  {
+    "id": "GA-004",
+    "name": "McIntosh",
+    "state": "GA",
+    "lat": 31.516,
+    "lon": -81.362,
+    "voltage_kv": 115,
+    "utility": "Georgia Power"
+  },
+  {
+    "id": "GA-005",
+    "name": "Jesup",
+    "state": "GA",
+    "lat": 31.607,
+    "lon": -81.885,
+    "voltage_kv": 115,
+    "utility": "Georgia Power"
+  },
+  {
+    "id": "SC-001",
+    "name": "Canadys",
+    "state": "SC",
+    "lat": 33.049,
+    "lon": -80.599,
+    "voltage_kv": 500,
+    "utility": "Dominion Energy SC"
+  },
+  {
+    "id": "SC-002",
+    "name": "Charleston",
+    "state": "SC",
+    "lat": 32.776,
+    "lon": -79.931,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy SC"
+  },
+  {
+    "id": "SC-003",
+    "name": "Georgetown",
+    "state": "SC",
+    "lat": 33.376,
+    "lon": -79.293,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy SC"
+  },
+  {
+    "id": "SC-004",
+    "name": "Myrtle Beach",
+    "state": "SC",
+    "lat": 33.689,
+    "lon": -78.887,
+    "voltage_kv": 115,
+    "utility": "Horry Electric"
+  },
+  {
+    "id": "SC-005",
+    "name": "Conway",
+    "state": "SC",
+    "lat": 33.836,
+    "lon": -79.047,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy SC"
+  },
+  {
+    "id": "SC-006",
+    "name": "Florence",
+    "state": "SC",
+    "lat": 34.195,
+    "lon": -79.761,
+    "voltage_kv": 230,
+    "utility": "Duke Energy"
+  },
+  {
+    "id": "SC-007",
+    "name": "Hilton Head",
+    "state": "SC",
+    "lat": 32.216,
+    "lon": -80.752,
+    "voltage_kv": 115,
+    "utility": "Dominion Energy SC"
+  },
+  {
+    "id": "SC-008",
+    "name": "Beaufort",
+    "state": "SC",
+    "lat": 32.432,
+    "lon": -80.67,
+    "voltage_kv": 115,
+    "utility": "Dominion Energy SC"
+  },
+  {
+    "id": "NC-001",
+    "name": "Cape Fear",
+    "state": "NC",
+    "lat": 34.038,
+    "lon": -78.038,
+    "voltage_kv": 230,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-002",
+    "name": "Wilmington",
+    "state": "NC",
+    "lat": 34.235,
+    "lon": -77.945,
+    "voltage_kv": 230,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-003",
+    "name": "Goldsboro",
+    "state": "NC",
+    "lat": 35.385,
+    "lon": -77.993,
+    "voltage_kv": 230,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-004",
+    "name": "Fayetteville",
+    "state": "NC",
+    "lat": 35.052,
+    "lon": -78.879,
+    "voltage_kv": 230,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-005",
+    "name": "New Bern",
+    "state": "NC",
+    "lat": 35.108,
+    "lon": -77.044,
+    "voltage_kv": 230,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-006",
+    "name": "Morehead City",
+    "state": "NC",
+    "lat": 34.723,
+    "lon": -76.731,
+    "voltage_kv": 115,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-007",
+    "name": "Greenville",
+    "state": "NC",
+    "lat": 35.613,
+    "lon": -77.373,
+    "voltage_kv": 230,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-008",
+    "name": "Rocky Mount",
+    "state": "NC",
+    "lat": 35.939,
+    "lon": -77.791,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy NC"
+  },
+  {
+    "id": "NC-009",
+    "name": "Elizabeth City",
+    "state": "NC",
+    "lat": 36.294,
+    "lon": -76.251,
+    "voltage_kv": 115,
+    "utility": "Dominion Energy NC"
+  },
+  {
+    "id": "NC-010",
+    "name": "Kill Devil Hills",
+    "state": "NC",
+    "lat": 36.031,
+    "lon": -75.676,
+    "voltage_kv": 115,
+    "utility": "Dominion Energy NC"
+  },
+  {
+    "id": "NC-011",
+    "name": "Jacksonville",
+    "state": "NC",
+    "lat": 34.754,
+    "lon": -77.43,
+    "voltage_kv": 115,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "NC-012",
+    "name": "Lumberton",
+    "state": "NC",
+    "lat": 34.618,
+    "lon": -79.008,
+    "voltage_kv": 115,
+    "utility": "Duke Energy Progress"
+  },
+  {
+    "id": "VA-001",
+    "name": "Elmont",
+    "state": "VA",
+    "lat": 36.953,
+    "lon": -76.333,
+    "voltage_kv": 500,
+    "utility": "Dominion Energy VA"
+  },
+  {
+    "id": "VA-002",
+    "name": "Virginia Beach",
+    "state": "VA",
+    "lat": 36.853,
+    "lon": -75.978,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy VA"
+  },
+  {
+    "id": "VA-003",
+    "name": "Chesapeake",
+    "state": "VA",
+    "lat": 36.769,
+    "lon": -76.287,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy VA"
+  },
+  {
+    "id": "VA-004",
+    "name": "Norfolk",
+    "state": "VA",
+    "lat": 36.85,
+    "lon": -76.285,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy VA"
+  },
+  {
+    "id": "VA-005",
+    "name": "Suffolk",
+    "state": "VA",
+    "lat": 36.728,
+    "lon": -76.589,
+    "voltage_kv": 115,
+    "utility": "Dominion Energy VA"
+  },
+  {
+    "id": "VA-006",
+    "name": "Newport News",
+    "state": "VA",
+    "lat": 37.075,
+    "lon": -76.471,
+    "voltage_kv": 230,
+    "utility": "Dominion Energy VA"
+  }
+]

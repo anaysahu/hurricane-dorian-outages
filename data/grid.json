@@ -1,0 +1,750 @@
+{
+  "feeders": [
+    {
+      "id": "BB-FL-001",
+      "name": "Riviera-Corbett 500kV",
+      "type": "backbone",
+      "voltage_kv": 500,
+      "coords": [
+        [
+          26.778,
+          -80.058
+        ],
+        [
+          26.75,
+          -80.13
+        ],
+        [
+          26.72,
+          -80.2
+        ],
+        [
+          26.69,
+          -80.247
+        ]
+      ]
+    },
+    {
+      "id": "BB-FL-002",
+      "name": "Corbett-Martin 345kV",
+      "type": "backbone",
+      "voltage_kv": 345,
+      "coords": [
+        [
+          26.69,
+          -80.247
+        ],
+        [
+          26.8,
+          -80.31
+        ],
+        [
+          27.073,
+          -80.375
+        ]
+      ]
+    },
+    {
+      "id": "BB-FL-003",
+      "name": "Florida East Coast 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          27.073,
+          -80.375
+        ],
+        [
+          27.7,
+          -80.415
+        ],
+        [
+          28.084,
+          -80.631
+        ],
+        [
+          28.435,
+          -80.588
+        ],
+        [
+          29.212,
+          -81.024
+        ],
+        [
+          29.473,
+          -81.128
+        ],
+        [
+          29.997,
+          -81.455
+        ]
+      ]
+    },
+    {
+      "id": "BB-FL-004",
+      "name": "Jacksonville 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          29.997,
+          -81.455
+        ],
+        [
+          30.1,
+          -81.52
+        ],
+        [
+          30.332,
+          -81.655
+        ]
+      ]
+    },
+    {
+      "id": "BB-GA-001",
+      "name": "GA Coast 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          30.332,
+          -81.655
+        ],
+        [
+          31.149,
+          -81.491
+        ],
+        [
+          31.516,
+          -81.362
+        ],
+        [
+          31.607,
+          -81.885
+        ],
+        [
+          32.08,
+          -81.099
+        ]
+      ]
+    },
+    {
+      "id": "BB-GA-002",
+      "name": "Savannah-Brier Creek 500kV",
+      "type": "backbone",
+      "voltage_kv": 500,
+      "coords": [
+        [
+          32.08,
+          -81.099
+        ],
+        [
+          32.25,
+          -81.38
+        ],
+        [
+          32.478,
+          -81.789
+        ]
+      ]
+    },
+    {
+      "id": "BB-SC-001",
+      "name": "Canadys-Charleston 500kV",
+      "type": "backbone",
+      "voltage_kv": 500,
+      "coords": [
+        [
+          33.049,
+          -80.599
+        ],
+        [
+          32.95,
+          -80.2
+        ],
+        [
+          32.776,
+          -79.931
+        ]
+      ]
+    },
+    {
+      "id": "BB-SC-002",
+      "name": "Charleston-Georgetown 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          32.776,
+          -79.931
+        ],
+        [
+          33.05,
+          -79.42
+        ],
+        [
+          33.376,
+          -79.293
+        ]
+      ]
+    },
+    {
+      "id": "BB-SC-003",
+      "name": "Georgetown-Conway-Myrtle 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          33.376,
+          -79.293
+        ],
+        [
+          33.6,
+          -79.1
+        ],
+        [
+          33.836,
+          -79.047
+        ],
+        [
+          33.689,
+          -78.887
+        ]
+      ]
+    },
+    {
+      "id": "BB-SC-004",
+      "name": "Canadys-Florence 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          33.049,
+          -80.599
+        ],
+        [
+          33.5,
+          -80.2
+        ],
+        [
+          34.195,
+          -79.761
+        ]
+      ]
+    },
+    {
+      "id": "BB-NC-001",
+      "name": "Wilmington-Cape Fear 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          33.689,
+          -78.887
+        ],
+        [
+          33.93,
+          -78.42
+        ],
+        [
+          34.038,
+          -78.038
+        ],
+        [
+          34.235,
+          -77.945
+        ]
+      ]
+    },
+    {
+      "id": "BB-NC-002",
+      "name": "Wilmington-Jacksonville-Morehead 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          34.235,
+          -77.945
+        ],
+        [
+          34.61,
+          -77.68
+        ],
+        [
+          34.754,
+          -77.43
+        ],
+        [
+          34.9,
+          -77.1
+        ],
+        [
+          34.723,
+          -76.731
+        ]
+      ]
+    },
+    {
+      "id": "BB-NC-003",
+      "name": "New Bern-Greenville-Rocky Mount 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          34.723,
+          -76.731
+        ],
+        [
+          35.108,
+          -77.044
+        ],
+        [
+          35.385,
+          -77.993
+        ],
+        [
+          35.613,
+          -77.373
+        ],
+        [
+          35.939,
+          -77.791
+        ]
+      ]
+    },
+    {
+      "id": "BB-NC-004",
+      "name": "NC Outer Banks 115kV",
+      "type": "backbone",
+      "voltage_kv": 115,
+      "coords": [
+        [
+          35.939,
+          -77.791
+        ],
+        [
+          36.1,
+          -76.8
+        ],
+        [
+          36.294,
+          -76.251
+        ],
+        [
+          36.031,
+          -75.676
+        ]
+      ]
+    },
+    {
+      "id": "BB-NC-005",
+      "name": "Fayetteville-Lumberton 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          35.052,
+          -78.879
+        ],
+        [
+          34.8,
+          -78.95
+        ],
+        [
+          34.618,
+          -79.008
+        ]
+      ]
+    },
+    {
+      "id": "BB-VA-001",
+      "name": "Elmont-Norfolk-VB 500kV",
+      "type": "backbone",
+      "voltage_kv": 500,
+      "coords": [
+        [
+          35.939,
+          -77.791
+        ],
+        [
+          36.5,
+          -76.9
+        ],
+        [
+          36.953,
+          -76.333
+        ],
+        [
+          36.85,
+          -76.285
+        ],
+        [
+          36.769,
+          -76.287
+        ],
+        [
+          36.853,
+          -75.978
+        ]
+      ]
+    },
+    {
+      "id": "BB-VA-002",
+      "name": "Hampton Roads 230kV",
+      "type": "backbone",
+      "voltage_kv": 230,
+      "coords": [
+        [
+          36.953,
+          -76.333
+        ],
+        [
+          37.075,
+          -76.471
+        ],
+        [
+          36.728,
+          -76.589
+        ],
+        [
+          36.85,
+          -76.285
+        ]
+      ]
+    }
+  ],
+  "laterals": [
+    {
+      "id": "LAT-FL-001",
+      "name": "Daytona Beach Distribution",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          29.212,
+          -81.024
+        ],
+        [
+          29.17,
+          -81.0
+        ],
+        [
+          29.15,
+          -80.99
+        ],
+        [
+          29.13,
+          -80.97
+        ]
+      ]
+    },
+    {
+      "id": "LAT-FL-002",
+      "name": "Palm Coast Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          29.473,
+          -81.128
+        ],
+        [
+          29.5,
+          -81.1
+        ],
+        [
+          29.52,
+          -81.05
+        ]
+      ]
+    },
+    {
+      "id": "LAT-FL-003",
+      "name": "St. Augustine Distribution",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          29.997,
+          -81.455
+        ],
+        [
+          29.89,
+          -81.316
+        ],
+        [
+          29.87,
+          -81.29
+        ]
+      ]
+    },
+    {
+      "id": "LAT-GA-001",
+      "name": "Savannah Distribution",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          32.08,
+          -81.099
+        ],
+        [
+          32.05,
+          -81.05
+        ],
+        [
+          32.03,
+          -81.02
+        ]
+      ]
+    },
+    {
+      "id": "LAT-GA-002",
+      "name": "Brunswick Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          31.149,
+          -81.491
+        ],
+        [
+          31.2,
+          -81.44
+        ],
+        [
+          31.22,
+          -81.4
+        ]
+      ]
+    },
+    {
+      "id": "LAT-SC-001",
+      "name": "Charleston North Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          32.776,
+          -79.931
+        ],
+        [
+          32.85,
+          -79.85
+        ],
+        [
+          32.9,
+          -79.8
+        ]
+      ]
+    },
+    {
+      "id": "LAT-SC-002",
+      "name": "Charleston South Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          32.776,
+          -79.931
+        ],
+        [
+          32.7,
+          -79.96
+        ],
+        [
+          32.66,
+          -79.99
+        ]
+      ]
+    },
+    {
+      "id": "LAT-SC-003",
+      "name": "Myrtle Beach Distribution",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          33.689,
+          -78.887
+        ],
+        [
+          33.71,
+          -78.85
+        ],
+        [
+          33.73,
+          -78.82
+        ]
+      ]
+    },
+    {
+      "id": "LAT-SC-004",
+      "name": "Hilton Head Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          32.216,
+          -80.752
+        ],
+        [
+          32.18,
+          -80.73
+        ],
+        [
+          32.15,
+          -80.71
+        ]
+      ]
+    },
+    {
+      "id": "LAT-NC-001",
+      "name": "Wilmington Beach Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          34.235,
+          -77.945
+        ],
+        [
+          34.2,
+          -77.886
+        ],
+        [
+          34.17,
+          -77.856
+        ]
+      ]
+    },
+    {
+      "id": "LAT-NC-002",
+      "name": "Outer Banks OBX Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          36.031,
+          -75.676
+        ],
+        [
+          35.9,
+          -75.65
+        ],
+        [
+          35.75,
+          -75.62
+        ],
+        [
+          35.55,
+          -75.49
+        ]
+      ]
+    },
+    {
+      "id": "LAT-NC-003",
+      "name": "New Bern Distribution",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          35.108,
+          -77.044
+        ],
+        [
+          35.08,
+          -77.0
+        ],
+        [
+          35.06,
+          -76.96
+        ]
+      ]
+    },
+    {
+      "id": "LAT-NC-004",
+      "name": "Jacksonville Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          34.754,
+          -77.43
+        ],
+        [
+          34.72,
+          -77.4
+        ],
+        [
+          34.69,
+          -77.37
+        ]
+      ]
+    },
+    {
+      "id": "LAT-VA-001",
+      "name": "Virginia Beach Oceanfront",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          36.853,
+          -75.978
+        ],
+        [
+          36.85,
+          -75.96
+        ],
+        [
+          36.82,
+          -75.97
+        ],
+        [
+          36.79,
+          -75.96
+        ]
+      ]
+    },
+    {
+      "id": "LAT-VA-002",
+      "name": "Norfolk Distribution",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          36.85,
+          -76.285
+        ],
+        [
+          36.87,
+          -76.25
+        ],
+        [
+          36.89,
+          -76.22
+        ]
+      ]
+    },
+    {
+      "id": "LAT-VA-003",
+      "name": "Chesapeake Lateral",
+      "type": "lateral",
+      "voltage_kv": 12.47,
+      "coords": [
+        [
+          36.769,
+          -76.287
+        ],
+        [
+          36.75,
+          -76.35
+        ],
+        [
+          36.73,
+          -76.4
+        ]
+      ]
+    }
+  ]
+}
