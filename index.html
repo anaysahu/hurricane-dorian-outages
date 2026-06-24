@@ -439,7 +439,16 @@ async function init() {
     outageData = od && od.hours ? od : (od && od.records ? od : { hours: [], records: [] });
     countyMeta  = cm && !Array.isArray(cm) ? cm : {};
     substations = Array.isArray(ss) ? ss : (ss && ss.substations ? ss.substations : Object.values(ss || {}));
-    gridData    = gd && gd.feeders ? gd : { feeders: gd || [], laterals: [] };
+    // Normalize gridData - handle any upload shape
+    if (Array.isArray(gd)) {
+      gridData = { feeders: gd, laterals: [] };
+    } else if (gd && Array.isArray(gd.feeders)) {
+      gridData = gd;
+    } else if (gd && Array.isArray(gd.laterals)) {
+      gridData = { feeders: [], laterals: gd.laterals };
+    } else {
+      gridData = { feeders: [], laterals: [] };
+    }
 
     hours = outageData.hours;
     document.getElementById('time-slider').max = hours.length - 1;
@@ -504,9 +513,11 @@ function buildSubstations() {
 
 // ─── Grid Lines ───
 function buildGrid() {
+  const feeders  = Array.isArray(gridData.feeders)  ? gridData.feeders  : [];
+  const laterals = Array.isArray(gridData.laterals) ? gridData.laterals : [];
   // Backbone lines
-  (gridData.feeders || []).forEach(f => {
-    if (!f || !f.coords || f.coords.length < 2) return;
+  feeders.forEach(f => {
+    if (!f || !Array.isArray(f.coords) || f.coords.length < 2) return;
     const weight = f.voltage_kv >= 500 ? 2.5 : f.voltage_kv >= 230 ? 1.8 : 1.2;
     const line = L.polyline(f.coords, {
       color: '#58a6ff',
@@ -521,8 +532,8 @@ function buildGrid() {
   });
 
   // Lateral lines
-  (gridData.laterals || []).forEach(l => {
-    if (!l || !l.coords || l.coords.length < 2) return;
+  laterals.forEach(l => {
+    if (!l || !Array.isArray(l.coords) || l.coords.length < 2) return;
     const line = L.polyline(l.coords, {
       color: '#4ec9b0',
       weight: 1,
