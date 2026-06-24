@@ -435,7 +435,8 @@ async function init() {
     const [od, cm, ss, gd] = await Promise.all(
       Object.values(DATA_FILES).map(f => fetch(f).then(r => r.json()))
     );
-    outageData = od && od.hours ? od : { hours: [], records: [] };
+    // Normalize in case files were uploaded with extra wrapping
+    outageData = od && od.hours ? od : (od && od.records ? od : { hours: [], records: [] });
     countyMeta  = cm && !Array.isArray(cm) ? cm : {};
     substations = Array.isArray(ss) ? ss : (ss && ss.substations ? ss.substations : Object.values(ss || {}));
     gridData    = gd && gd.feeders ? gd : { feeders: gd || [], laterals: [] };
@@ -474,6 +475,7 @@ function buildMap() {
 // ─── Substations ───
 function buildSubstations() {
   substations.forEach(sub => {
+    if (!sub || sub.lat == null || sub.lon == null || isNaN(+sub.lat) || isNaN(+sub.lon)) return;
     const size = sub.voltage_kv >= 500 ? 10 : sub.voltage_kv >= 230 ? 8 : 6;
     const icon = L.divIcon({
       className: '',
@@ -503,7 +505,8 @@ function buildSubstations() {
 // ─── Grid Lines ───
 function buildGrid() {
   // Backbone lines
-  gridData.feeders.forEach(f => {
+  (gridData.feeders || []).forEach(f => {
+    if (!f || !f.coords || f.coords.length < 2) return;
     const weight = f.voltage_kv >= 500 ? 2.5 : f.voltage_kv >= 230 ? 1.8 : 1.2;
     const line = L.polyline(f.coords, {
       color: '#58a6ff',
@@ -518,7 +521,8 @@ function buildGrid() {
   });
 
   // Lateral lines
-  gridData.laterals.forEach(l => {
+  (gridData.laterals || []).forEach(l => {
+    if (!l || !l.coords || l.coords.length < 2) return;
     const line = L.polyline(l.coords, {
       color: '#4ec9b0',
       weight: 1,
@@ -537,7 +541,7 @@ function buildCountyPolygons() {
   const allFips = new Set(outageData.records.map(r => r.fips));
   allFips.forEach(fips => {
     const meta = countyMeta[fips];
-    if (!meta) return;
+    if (!meta || meta.lat == null || meta.lon == null || isNaN(+meta.lat) || isNaN(+meta.lon)) return;
     const circle = L.circleMarker([meta.lat, meta.lon], {
       radius: 6,
       fillColor: 'transparent',
@@ -606,27 +610,29 @@ function updateFrame(idx) {
   const maxOut = Math.max(...Object.values(snapshot).map(r => r.outages), 1);
 
   Object.entries(countyLayers).forEach(([fips, { circle, meta }]) => {
-    const r = snapshot[fips];
-    const n = r ? r.outages : 0;
-    const radius = n > 0 ? Math.max(6, Math.min(28, 6 + Math.sqrt(n / 100))) : 0;
+    try {
+      const r = snapshot[fips];
+      const n = r ? r.outages : 0;
+      const radius = n > 0 ? Math.max(6, Math.min(28, 6 + Math.sqrt(n / 100))) : 0;
 
-    circle.setStyle({
-      fillColor: outageColour(n),
-      color: n > 0 ? '#ffffff44' : 'transparent',
-      fillOpacity: n > 0 ? 0.85 : 0,
-      weight: n > 0 ? 0.5 : 0,
-      radius,
-    });
+      circle.setStyle({
+        fillColor: outageColour(n),
+        color: n > 0 ? '#ffffff44' : 'transparent',
+        fillOpacity: n > 0 ? 0.85 : 0,
+        weight: n > 0 ? 0.5 : 0,
+        radius,
+      });
 
-    if (n > 0) {
-      circle.setTooltipContent(`
-        <div class="tip-title">📍 ${meta.name} County, ${r.state}</div>
-        <div class="tip-row"><span class="tip-key">Customers Out</span><span class="tip-val" style="color:#f85149">${n.toLocaleString()}</span></div>
-        <div class="tip-row"><span class="tip-key">Median Outages</span><span class="tip-val">${(r.median||0).toLocaleString()}</span></div>
-        <div class="tip-row"><span class="tip-key">Time</span><span class="tip-val">${hourStr.slice(0,16).replace('T',' ')} UTC</span></div>
-      `);
-      heatPts.push([meta.lat, meta.lon, n / maxOut]);
-    }
+      if (n > 0 && meta && meta.lat != null && meta.lon != null) {
+        circle.setTooltipContent(`
+          <div class="tip-title">📍 ${meta.name} County, ${r.state}</div>
+          <div class="tip-row"><span class="tip-key">Customers Out</span><span class="tip-val" style="color:#f85149">${n.toLocaleString()}</span></div>
+          <div class="tip-row"><span class="tip-key">Median Outages</span><span class="tip-val">${(r.median||0).toLocaleString()}</span></div>
+          <div class="tip-row"><span class="tip-key">Time</span><span class="tip-val">${hourStr.slice(0,16).replace('T',' ')} UTC</span></div>
+        `);
+        heatPts.push([meta.lat, meta.lon, n / maxOut]);
+      }
+    } catch(err) { /* skip bad county */ }
   });
 
   // Heat overlay
