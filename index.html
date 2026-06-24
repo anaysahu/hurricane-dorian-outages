@@ -435,10 +435,10 @@ async function init() {
     const [od, cm, ss, gd] = await Promise.all(
       Object.values(DATA_FILES).map(f => fetch(f).then(r => r.json()))
     );
-    outageData = od;
-    countyMeta = cm;
-    substations = ss;
-    gridData = gd;
+    outageData = od && od.hours ? od : { hours: [], records: [] };
+    countyMeta  = cm && !Array.isArray(cm) ? cm : {};
+    substations = Array.isArray(ss) ? ss : (ss && ss.substations ? ss.substations : Object.values(ss || {}));
+    gridData    = gd && gd.feeders ? gd : { feeders: gd || [], laterals: [] };
 
     hours = outageData.hours;
     document.getElementById('time-slider').max = hours.length - 1;
