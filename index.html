@@ -244,10 +244,11 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
 
       <div class="sec">
         <h3>Legend</h3>
-        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.15);border:1px solid #f85149"></div>&lt;500 customers out</div>
-        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.45)"></div>500–5k customers out</div>
-        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.80)"></div>5k–25k customers out</div>
-        <div class="lr"><div class="ls" style="background:#f85149"></div>&gt;25k customers out</div>
+        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.15);border:1px solid #f85149"></div>&lt;10 customers out</div>
+        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.35)"></div>10–50 customers out</div>
+        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.58)"></div>50–200 customers out</div>
+        <div class="lr"><div class="ls" style="background:rgba(248,81,73,.80)"></div>200–1,000 customers out</div>
+        <div class="lr"><div class="ls" style="background:rgba(220,30,20,.97)"></div>&gt;1,000 customers out</div>
         <div class="lr"><div class="ld"></div>Substation</div>
         <div class="lr"><div class="ll" style="background:#4488ff88"></div>Backbone feeder (115–500 kV)</div>
         <div class="lr"><div class="ll" style="background:#4ec9b066"></div>Distribution lateral (12.47 kV)</div>
@@ -362,11 +363,10 @@ const CMP_COLORS=['#58a6ff','#f85149','#3fb950','#f0c040','#c792ea','#ff7b5a'];
 function getPhase(h){return PHASES.find(p=>h<p.end)||PHASES[PHASES.length-1];}
 function color(n){
   if(n<=0)return'transparent';
-  if(n<500)return'rgba(248,81,73,0.15)';
-  if(n<2000)return'rgba(248,81,73,0.42)';
-  if(n<5000)return'rgba(248,81,73,0.65)';
-  if(n<15000)return'rgba(248,81,73,0.82)';
-  if(n<50000)return'rgba(248,81,73,0.94)';
+  if(n<10)return'rgba(248,81,73,0.15)';
+  if(n<50)return'rgba(248,81,73,0.35)';
+  if(n<200)return'rgba(248,81,73,0.58)';
+  if(n<1000)return'rgba(248,81,73,0.80)';
   return'rgba(220,30,20,0.97)';
 }
 function scoreGrade(s){
