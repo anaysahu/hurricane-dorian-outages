@@ -322,7 +322,6 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
       <button class="compare-btn" id="d-compare-btn" onclick="toggleCompare()">+ Add to Comparison</button>
       <div id="detail-chart-title">Outage Restoration Curve<button class="chart-expand-btn" onclick="openChartModal()">&#x26F6; Expand</button></div>
       <div class="chart-wrap"><canvas id="detail-chart"></canvas></div>
-      <div class="zoom-hint">Scroll to zoom · Shift+drag to pan</div>
       <div class="utility-info" id="d-utility"></div>
       <div class="insight-box" id="d-insight"></div>
     </div>
@@ -353,7 +352,7 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
       <span id="modal-county-name">Outage Restoration Curve</span>
       <button onclick="closeChartModal()">&#x2715;</button>
     </div>
-    <div class="zoom-hint">Scroll to zoom · Shift+drag to pan · Double-click to reset</div>
+    <div class="zoom-hint">Scroll to zoom in/out · Shift+drag to pan · Double-click to reset</div>
     <div id="modal-chart-wrap"><canvas id="modal-chart"></canvas></div>
   </div>
 </div>
@@ -601,36 +600,27 @@ function openDetail(fips){
   document.getElementById('d-insight').innerHTML=insight;
 
   // Chart — trimmed to active outage window
-  const series=buildCountySeries(fips,true);
-  const labels=series.map(p=>p.x);
-  const data=series.map(p=>p.y);
-  // Pick tick unit based on span length
-  const spanHours=series.length;
-  const unit=spanHours<=72?'hour':spanHours<=240?'day':'day';
-  const fmt=spanHours<=72?{hour:'MMM d, ha'}:{day:'MMM d'};
+  const series=buildCountySeries(fips,false);
+  const ptData=series.map(p=>({x:p.x,y:p.y}));
   if(detailChart){detailChart.destroy();detailChart=null;}
   const ctx=document.getElementById('detail-chart').getContext('2d');
-  const zoomOpts={zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x',modifierKey:'shift'}};
   detailChart=new Chart(ctx,{
     type:'line',
-    data:{labels,datasets:[{label:'Customers Without Power',data,borderColor:'#f85149',
-      backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},
+    data:{datasets:[{label:'Customers Without Power',data:ptData,borderColor:'#f85149',
+      backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:0,fill:true,tension:0}]},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},zoom:zoomOpts,tooltip:{
-        callbacks:{title:items=>{const d=new Date(items[0].label);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
-        label:item=>`${Math.round(item.raw).toLocaleString()} customers out`}}},
+      plugins:{legend:{display:false},tooltip:{
+        callbacks:{title:items=>{const d=new Date(items[0].parsed.x);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
+        label:item=>`${Math.round(item.raw.y).toLocaleString()} customers out`}}},
       scales:{
-        x:{type:'time',time:{unit,displayFormats:fmt},
+        x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d'}},
           ticks:{color:'#8b949e',font:{size:10},maxTicksLimit:8},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:10},callback:v=>fmtN(v)},
           grid:{color:'#21262d'},min:0}
       }
     }
   });
-
-  // Double-click resets zoom
-  document.getElementById('detail-chart').ondblclick=()=>{if(detailChart)detailChart.resetZoom();};
 
   // Compare button state
   const added=compareFips.includes(fips);
@@ -651,34 +641,31 @@ function openChartModal(){
   if(!currentFips)return;
   const c=COUNTY_COORDS[currentFips]; if(!c)return;
   document.getElementById('modal-county-name').textContent=`${c[2]} County — Outage Restoration Curve`;
-  const series=buildCountySeries(currentFips,true);
-  const labels=series.map(p=>p.x);
-  const data=series.map(p=>p.y);
-  const spanHours=series.length;
-  const unit=spanHours<=72?'hour':'day';
-  const fmt=spanHours<=72?{hour:'MMM d, ha'}:{day:'MMM d'};
+  const series=buildCountySeries(currentFips,false);
+  const ptData=series.map(p=>({x:p.x,y:p.y}));
   if(modalChart){modalChart.destroy();modalChart=null;}
   const ctx=document.getElementById('modal-chart').getContext('2d');
   modalChart=new Chart(ctx,{
     type:'line',
-    data:{labels,datasets:[{label:'Customers Without Power',data,borderColor:'#f85149',
-      backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:1,fill:true,tension:0.3}]},
+    data:{datasets:[{label:'Customers Without Power',data:ptData,borderColor:'#f85149',
+      backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:1,fill:true,tension:0}]},
     options:{
       responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},
         zoom:{zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},
               pan:{enabled:true,mode:'x',modifierKey:'shift'}},
         tooltip:{callbacks:{
-          title:items=>{const d=new Date(items[0].label);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
-          label:item=>`${Math.round(item.raw).toLocaleString()} customers out`}}},
+          title:items=>{const d=new Date(items[0].parsed.x);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
+          label:item=>`${Math.round(item.raw.y).toLocaleString()} customers out`}}},
       scales:{
-        x:{type:'time',time:{unit,displayFormats:fmt},
+        x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d',hour:'MMM d, ha'}},
           ticks:{color:'#8b949e',font:{size:11},maxTicksLimit:10},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:11},callback:v=>fmtN(v)},
           grid:{color:'#21262d'},min:0,title:{display:true,text:'Customers Without Power',color:'#8b949e',font:{size:11}}}
       }
     }
   });
+  document.getElementById('modal-chart').ondblclick=()=>{if(modalChart)modalChart.resetZoom();};
   document.getElementById('chart-modal').classList.add('open');
 }
 
