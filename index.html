@@ -8,6 +8,8 @@
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#e6edf3}
@@ -128,7 +130,17 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
 .score-letter{font-size:1.4rem;font-weight:700}
 
 .chart-wrap{position:relative;height:200px;margin-bottom:12px}
-#detail-chart-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#8b949e;margin-bottom:5px}
+#detail-chart-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#8b949e;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+.chart-expand-btn{background:none;border:1px solid #30363d;border-radius:4px;color:#8b949e;cursor:pointer;font-size:.65rem;padding:2px 7px;transition:all .15s}
+.chart-expand-btn:hover{border-color:#58a6ff;color:#58a6ff}
+#chart-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);align-items:center;justify-content:center}
+#chart-modal.open{display:flex}
+#chart-modal-inner{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;width:90vw;max-width:900px;max-height:90vh;display:flex;flex-direction:column;gap:12px}
+#chart-modal-title{font-size:.75rem;font-weight:600;color:#c9d1d9;display:flex;justify-content:space-between;align-items:center}
+#chart-modal-title button{background:none;border:none;color:#8b949e;cursor:pointer;font-size:1.1rem;padding:2px 6px}
+#chart-modal-title button:hover{color:#e6edf3}
+#modal-chart-wrap{flex:1;min-height:400px;position:relative}
+.zoom-hint{font-size:.62rem;color:#8b949e;text-align:center}
 
 .compare-btn{width:100%;padding:7px;background:#21262d;border:1px solid #30363d;
   border-radius:6px;color:#e6edf3;cursor:pointer;font-size:.75rem;margin-bottom:10px;transition:background .15s}
@@ -308,8 +320,9 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
         <div class="m-box"><div class="m-val b" id="d-total">—</div><div class="m-lbl">Total Customer-Hours</div></div>
       </div>
       <button class="compare-btn" id="d-compare-btn" onclick="toggleCompare()">+ Add to Comparison</button>
-      <div id="detail-chart-title">Outage Restoration Curve</div>
+      <div id="detail-chart-title">Outage Restoration Curve<button class="chart-expand-btn" onclick="openChartModal()">&#x26F6; Expand</button></div>
       <div class="chart-wrap"><canvas id="detail-chart"></canvas></div>
+      <div class="zoom-hint">Scroll to zoom · Shift+drag to pan</div>
       <div class="utility-info" id="d-utility"></div>
       <div class="insight-box" id="d-insight"></div>
     </div>
@@ -331,6 +344,18 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
   </div>
 </div>
 
+</div>
+
+<!-- Chart expand modal -->
+<div id="chart-modal" onclick="closeChartModal(event)">
+  <div id="chart-modal-inner">
+    <div id="chart-modal-title">
+      <span id="modal-county-name">Outage Restoration Curve</span>
+      <button onclick="closeChartModal()">&#x2715;</button>
+    </div>
+    <div class="zoom-hint">Scroll to zoom · Shift+drag to pan · Double-click to reset</div>
+    <div id="modal-chart-wrap"><canvas id="modal-chart"></canvas></div>
+  </div>
 </div>
 
 <script>
@@ -381,6 +406,30 @@ function fmtN(n){return n>=1000?(n/1000).toFixed(1)+'k':Math.round(n)+''}
 function fmtHour(h){
   const d=new Date(h);
   return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC'});
+}
+
+// Recompute restore_h using wall-clock hours from HOURS timestamps
+// The embedded values used array-index differences which don't account for gaps in the hourly data
+function fixRestoreH(){
+  for(const fips of Object.keys(COUNTY_METRICS)){
+    const mt=COUNTY_METRICS[fips];
+    if(!mt.peak||mt.peak<5||mt.peak_hidx===null)continue;
+    const threshold=mt.peak*0.10;
+    let restoreIdx=null;
+    for(let i=mt.peak_hidx+1;i<HOURS.length;i++){
+      const recs=HOUR_INDEX[HOURS[i]]||[];
+      const rec=recs.find(r=>r[0]===fips);
+      const v=rec?rec[1]:0;
+      if(v<=threshold){restoreIdx=i;break;}
+    }
+    if(restoreIdx!==null){
+      const tPeak=new Date(HOURS[mt.peak_hidx]);
+      const tRestore=new Date(HOURS[restoreIdx]);
+      mt.restore_h=Math.round((tRestore-tPeak)/3600000);
+    } else {
+      mt.restore_h=null;
+    }
+  }
 }
 
 // ─── Map & Layers ─────────────────────────────────────────────────────────────
@@ -561,13 +610,14 @@ function openDetail(fips){
   const fmt=spanHours<=72?{hour:'MMM d, ha'}:{day:'MMM d'};
   if(detailChart){detailChart.destroy();detailChart=null;}
   const ctx=document.getElementById('detail-chart').getContext('2d');
+  const zoomOpts={zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x',modifierKey:'shift'}};
   detailChart=new Chart(ctx,{
     type:'line',
     data:{labels,datasets:[{label:'Customers Without Power',data,borderColor:'#f85149',
       backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{
+      plugins:{legend:{display:false},zoom:zoomOpts,tooltip:{
         callbacks:{title:items=>{const d=new Date(items[0].label);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
         label:item=>`${Math.round(item.raw).toLocaleString()} customers out`}}},
       scales:{
@@ -578,6 +628,9 @@ function openDetail(fips){
       }
     }
   });
+
+  // Double-click resets zoom
+  document.getElementById('detail-chart').ondblclick=()=>{if(detailChart)detailChart.resetZoom();};
 
   // Compare button state
   const added=compareFips.includes(fips);
@@ -590,6 +643,50 @@ function openDetail(fips){
 }
 
 function closeDetail(){document.getElementById('detail').classList.remove('open');}
+
+// ─── Chart Expand Modal ───────────────────────────────────────────────────────
+let modalChart=null;
+
+function openChartModal(){
+  if(!currentFips)return;
+  const c=COUNTY_COORDS[currentFips]; if(!c)return;
+  document.getElementById('modal-county-name').textContent=`${c[2]} County — Outage Restoration Curve`;
+  const series=buildCountySeries(currentFips,true);
+  const labels=series.map(p=>p.x);
+  const data=series.map(p=>p.y);
+  const spanHours=series.length;
+  const unit=spanHours<=72?'hour':'day';
+  const fmt=spanHours<=72?{hour:'MMM d, ha'}:{day:'MMM d'};
+  if(modalChart){modalChart.destroy();modalChart=null;}
+  const ctx=document.getElementById('modal-chart').getContext('2d');
+  modalChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[{label:'Customers Without Power',data,borderColor:'#f85149',
+      backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:1,fill:true,tension:0.3}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        zoom:{zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},
+              pan:{enabled:true,mode:'x',modifierKey:'shift'}},
+        tooltip:{callbacks:{
+          title:items=>{const d=new Date(items[0].label);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
+          label:item=>`${Math.round(item.raw).toLocaleString()} customers out`}}},
+      scales:{
+        x:{type:'time',time:{unit,displayFormats:fmt},
+          ticks:{color:'#8b949e',font:{size:11},maxTicksLimit:10},grid:{color:'#21262d'}},
+        y:{ticks:{color:'#8b949e',font:{size:11},callback:v=>fmtN(v)},
+          grid:{color:'#21262d'},min:0,title:{display:true,text:'Customers Without Power',color:'#8b949e',font:{size:11}}}
+      }
+    }
+  });
+  document.getElementById('chart-modal').classList.add('open');
+}
+
+function closeChartModal(e){
+  if(e&&e.target!==document.getElementById('chart-modal'))return;
+  document.getElementById('chart-modal').classList.remove('open');
+  if(modalChart){modalChart.destroy();modalChart=null;}
+}
 
 // ─── Compare Panel ────────────────────────────────────────────────────────────
 let compareFips=[], cmpChart=null;
@@ -703,6 +800,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Chart.js time adapter
   Chart.defaults.color='#8b949e';
 
+  fixRestoreH();
   initMap(); initCountyMarkers(); initSubstations(); initGrid();
   document.getElementById('time-slider').max=HOURS.length-1;
   document.getElementById('time-slider').addEventListener('input',e=>updateFrame(+e.target.value));
