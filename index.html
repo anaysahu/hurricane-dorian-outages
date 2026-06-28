@@ -352,7 +352,7 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
       <span id="modal-county-name">Outage Restoration Curve</span>
       <button onclick="closeChartModal()">&#x2715;</button>
     </div>
-    <div class="zoom-hint">Scroll to zoom in/out · Shift+drag to pan · Double-click to reset</div>
+    <div class="zoom-hint">Scroll to zoom · Shift+drag to pan · Double-click to reset</div>
     <div id="modal-chart-wrap"><canvas id="modal-chart"></canvas></div>
   </div>
 </div>
@@ -599,28 +599,28 @@ function openDetail(fips){
   }
   document.getElementById('d-insight').innerHTML=insight;
 
-  // Chart — trimmed to active outage window
+  // Chart — full date range
   const series=buildCountySeries(fips,false);
-  const ptData=series.map(p=>({x:p.x,y:p.y}));
-  const yMax=Math.max(0,...ptData.map(p=>p.y))*1.1||10;
-  const fmtDate=d=>d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});
+  const detPts=series.map(p=>({x:p.x,y:p.y}));
+  const detYMax=Math.max(0,...detPts.map(p=>p.y))*1.1||10;
   if(detailChart){detailChart.destroy();detailChart=null;}
   const ctx=document.getElementById('detail-chart').getContext('2d');
   detailChart=new Chart(ctx,{
     type:'line',
-    data:{datasets:[{label:'Customers Without Power',data:ptData,borderColor:'#f85149',
+    data:{datasets:[{label:'Customers Without Power',data:detPts,borderColor:'#f85149',
       backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:0,fill:true,tension:0}]},
     options:{
       responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{
-        callbacks:{title:items=>{const pt=ptData[items[0].dataIndex];return pt?fmtDate(pt.x):'';},
-        label:item=>`${Math.round(ptData[item.dataIndex]?.y??0).toLocaleString()} customers out`}}},
+        callbacks:{
+          title:items=>{const pt=detPts[items[0].dataIndex];return pt?pt.x.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'}):'';},
+          label:item=>`${Math.round(detPts[item.dataIndex]?.y??0).toLocaleString()} customers out`}}},
       scales:{
         x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d'}},
           ticks:{color:'#8b949e',font:{size:10},maxTicksLimit:8},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:10},callback:v=>fmtN(v)},
-          grid:{color:'#21262d'},min:0,max:yMax}
+          grid:{color:'#21262d'},min:0,max:detYMax}
       }
     }
   });
@@ -645,31 +645,30 @@ function openChartModal(){
   const c=COUNTY_COORDS[currentFips]; if(!c)return;
   document.getElementById('modal-county-name').textContent=`${c[2]} County — Outage Restoration Curve`;
   const series=buildCountySeries(currentFips,false);
-  const mptData=series.map(p=>({x:p.x,y:p.y}));
-  const myMax=Math.max(0,...mptData.map(p=>p.y))*1.1||10;
-  const fmtDate=d=>d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});
+  const modPts=series.map(p=>({x:p.x,y:p.y}));
+  const modYMax=Math.max(0,...modPts.map(p=>p.y))*1.1||10;
   if(modalChart){modalChart.destroy();modalChart=null;}
   const ctx=document.getElementById('modal-chart').getContext('2d');
   modalChart=new Chart(ctx,{
     type:'line',
-    data:{datasets:[{label:'Customers Without Power',data:mptData,borderColor:'#f85149',
+    data:{datasets:[{label:'Customers Without Power',data:modPts,borderColor:'#f85149',
       backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:1,fill:true,tension:0}]},
     options:{
       responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},
         zoom:{
-          limits:{y:{min:0,max:myMax,minRange:myMax}},
+          limits:{y:{min:0,max:modYMax,minRange:modYMax}},
           zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},
           pan:{enabled:true,mode:'x',modifierKey:'shift'}},
         tooltip:{callbacks:{
-          title:items=>{const pt=mptData[items[0].dataIndex];return pt?fmtDate(pt.x):'';},
-          label:item=>`${Math.round(mptData[item.dataIndex]?.y??0).toLocaleString()} customers out`}}},
+          title:items=>{const pt=modPts[items[0].dataIndex];return pt?pt.x.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'}):'';},
+          label:item=>`${Math.round(modPts[item.dataIndex]?.y??0).toLocaleString()} customers out`}}},
       scales:{
         x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d',hour:'MMM d, ha'}},
           ticks:{color:'#8b949e',font:{size:11},maxTicksLimit:10},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:11},callback:v=>fmtN(v)},
-          grid:{color:'#21262d'},min:0,max:myMax,
+          grid:{color:'#21262d'},min:0,max:modYMax,
           title:{display:true,text:'Customers Without Power',color:'#8b949e',font:{size:11}}}
       }
     }
