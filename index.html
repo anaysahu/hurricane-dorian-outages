@@ -602,7 +602,8 @@ function openDetail(fips){
   // Chart — trimmed to active outage window
   const series=buildCountySeries(fips,false);
   const ptData=series.map(p=>({x:p.x,y:p.y}));
-  const yMax=Math.max(...ptData.map(p=>p.y))*1.1||10;
+  const yMax=Math.max(0,...ptData.map(p=>p.y))*1.1||10;
+  const fmtDate=d=>d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});
   if(detailChart){detailChart.destroy();detailChart=null;}
   const ctx=document.getElementById('detail-chart').getContext('2d');
   detailChart=new Chart(ctx,{
@@ -611,9 +612,10 @@ function openDetail(fips){
       backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:0,fill:true,tension:0}]},
     options:{
       responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{
-        callbacks:{title:items=>{const d=items[0].raw.x;return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
-        label:item=>`${Math.round(item.raw.y).toLocaleString()} customers out`}}},
+        callbacks:{title:items=>{const pt=ptData[items[0].dataIndex];return pt?fmtDate(pt.x):'';},
+        label:item=>`${Math.round(ptData[item.dataIndex]?.y??0).toLocaleString()} customers out`}}},
       scales:{
         x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d'}},
           ticks:{color:'#8b949e',font:{size:10},maxTicksLimit:8},grid:{color:'#21262d'}},
@@ -643,27 +645,31 @@ function openChartModal(){
   const c=COUNTY_COORDS[currentFips]; if(!c)return;
   document.getElementById('modal-county-name').textContent=`${c[2]} County — Outage Restoration Curve`;
   const series=buildCountySeries(currentFips,false);
-  const ptData=series.map(p=>({x:p.x,y:p.y}));
-  const yMax=Math.max(...ptData.map(p=>p.y))*1.1||10;
+  const mptData=series.map(p=>({x:p.x,y:p.y}));
+  const myMax=Math.max(0,...mptData.map(p=>p.y))*1.1||10;
+  const fmtDate=d=>d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});
   if(modalChart){modalChart.destroy();modalChart=null;}
   const ctx=document.getElementById('modal-chart').getContext('2d');
   modalChart=new Chart(ctx,{
     type:'line',
-    data:{datasets:[{label:'Customers Without Power',data:ptData,borderColor:'#f85149',
+    data:{datasets:[{label:'Customers Without Power',data:mptData,borderColor:'#f85149',
       backgroundColor:'rgba(248,81,73,0.12)',borderWidth:2,pointRadius:1,fill:true,tension:0}]},
     options:{
       responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},
-        zoom:{zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},
-              pan:{enabled:true,mode:'x',modifierKey:'shift'}},
+        zoom:{
+          limits:{y:{min:0,max:myMax,minRange:myMax}},
+          zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},
+          pan:{enabled:true,mode:'x',modifierKey:'shift'}},
         tooltip:{callbacks:{
-          title:items=>{const d=items[0].raw.x;return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
-          label:item=>`${Math.round(item.raw.y).toLocaleString()} customers out`}}},
+          title:items=>{const pt=mptData[items[0].dataIndex];return pt?fmtDate(pt.x):'';},
+          label:item=>`${Math.round(mptData[item.dataIndex]?.y??0).toLocaleString()} customers out`}}},
       scales:{
         x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d',hour:'MMM d, ha'}},
           ticks:{color:'#8b949e',font:{size:11},maxTicksLimit:10},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:11},callback:v=>fmtN(v)},
-          grid:{color:'#21262d'},min:0,max:yMax,
+          grid:{color:'#21262d'},min:0,max:myMax,
           title:{display:true,text:'Customers Without Power',color:'#8b949e',font:{size:11}}}
       }
     }
