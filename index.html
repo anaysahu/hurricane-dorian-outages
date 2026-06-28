@@ -602,6 +602,7 @@ function openDetail(fips){
   // Chart — trimmed to active outage window
   const series=buildCountySeries(fips,false);
   const ptData=series.map(p=>({x:p.x,y:p.y}));
+  const yMax=Math.max(...ptData.map(p=>p.y))*1.1||10;
   if(detailChart){detailChart.destroy();detailChart=null;}
   const ctx=document.getElementById('detail-chart').getContext('2d');
   detailChart=new Chart(ctx,{
@@ -611,13 +612,13 @@ function openDetail(fips){
     options:{
       responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{
-        callbacks:{title:items=>{const d=new Date(items[0].parsed.x);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
+        callbacks:{title:items=>{const d=items[0].raw.x;return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
         label:item=>`${Math.round(item.raw.y).toLocaleString()} customers out`}}},
       scales:{
         x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d'}},
           ticks:{color:'#8b949e',font:{size:10},maxTicksLimit:8},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:10},callback:v=>fmtN(v)},
-          grid:{color:'#21262d'},min:0}
+          grid:{color:'#21262d'},min:0,max:yMax}
       }
     }
   });
@@ -643,6 +644,7 @@ function openChartModal(){
   document.getElementById('modal-county-name').textContent=`${c[2]} County — Outage Restoration Curve`;
   const series=buildCountySeries(currentFips,false);
   const ptData=series.map(p=>({x:p.x,y:p.y}));
+  const yMax=Math.max(...ptData.map(p=>p.y))*1.1||10;
   if(modalChart){modalChart.destroy();modalChart=null;}
   const ctx=document.getElementById('modal-chart').getContext('2d');
   modalChart=new Chart(ctx,{
@@ -655,13 +657,14 @@ function openChartModal(){
         zoom:{zoom:{wheel:{enabled:true},pinch:{enabled:true},mode:'x'},
               pan:{enabled:true,mode:'x',modifierKey:'shift'}},
         tooltip:{callbacks:{
-          title:items=>{const d=new Date(items[0].parsed.x);return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
+          title:items=>{const d=items[0].raw.x;return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',timeZoneName:'short'});},
           label:item=>`${Math.round(item.raw.y).toLocaleString()} customers out`}}},
       scales:{
         x:{type:'time',time:{unit:'day',displayFormats:{day:'MMM d',hour:'MMM d, ha'}},
           ticks:{color:'#8b949e',font:{size:11},maxTicksLimit:10},grid:{color:'#21262d'}},
         y:{ticks:{color:'#8b949e',font:{size:11},callback:v=>fmtN(v)},
-          grid:{color:'#21262d'},min:0,title:{display:true,text:'Customers Without Power',color:'#8b949e',font:{size:11}}}
+          grid:{color:'#21262d'},min:0,max:yMax,
+          title:{display:true,text:'Customers Without Power',color:'#8b949e',font:{size:11}}}
       }
     }
   });
