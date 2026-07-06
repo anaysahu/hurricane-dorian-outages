@@ -173,6 +173,14 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
 .sim-open-btn{width:100%;padding:7px 10px;background:#21262d;border:1px solid #30363d;border-radius:5px;color:#8b949e;cursor:pointer;font-size:.73rem;text-align:left;transition:all .15s;margin-bottom:4px}
 .sim-open-btn:hover{border-color:#f85149;color:#f85149}
 @media(max-width:700px){#sim-body{flex-direction:column}#sim-controls{width:100%}}
+/* Crew dispatch map */
+#sim-map-section{flex-shrink:0;border-top:1px solid #21262d;padding-top:10px;margin-top:2px}
+#sim-dispatch-map{height:290px;border-radius:6px;overflow:hidden;background:#0d1117;border:1px solid #21262d}
+.sim-map-ctrl{display:flex;gap:8px;align-items:center;margin-top:6px}
+#sim-play-btn{padding:3px 12px;background:#21262d;border:1px solid #30363d;border-radius:4px;color:#c9d1d9;cursor:pointer;font-size:.77rem;flex-shrink:0}
+#sim-play-btn:hover{background:#30363d}
+#sim-map-slider{flex:1;accent-color:#58a6ff;cursor:pointer}
+#sim-map-time-lbl{font-size:.65rem;color:#c9d1d9;font-variant-numeric:tabular-nums;min-width:120px;text-align:right;flex-shrink:0}
 
 .compare-btn{width:100%;padding:7px;background:#21262d;border:1px solid #30363d;
   border-radius:6px;color:#e6edf3;cursor:pointer;font-size:.75rem;margin-bottom:10px;transition:background .15s}
@@ -430,6 +438,16 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
         </div>
         <button id="sim-run-btn" onclick="runAndDisplaySim()">&#x25BA; Run Simulation</button>
         <p class="sim-note">Each run samples crew variability (±30%), log-normal repair rates, and mobilization timing. Red bands = 5–95th (outer) and 25–75th (inner) percentile envelopes. Median shown in red. Blue dashed = actual recorded outage data.</p>
+      </div>
+    </div>
+    <!-- Crew Dispatch Map -->
+    <div id="sim-map-section">
+      <div class="sim-chart-lbl">Crew Dispatch Map &mdash; ◆ substations (staging) &nbsp;·&nbsp; circles = active outages &nbsp;·&nbsp; dashed blue lines = crew routes (after mobilization delay)</div>
+      <div id="sim-dispatch-map"></div>
+      <div class="sim-map-ctrl">
+        <button id="sim-play-btn" onclick="toggleSimPlay()">&#9654;</button>
+        <input type="range" id="sim-map-slider" min="0" step="1" value="0" oninput="seekSimMap(+this.value)">
+        <span id="sim-map-time-lbl">Hour +0 post-peak</span>
       </div>
     </div>
   </div>
@@ -856,6 +874,9 @@ function closeSimModal(e){
   document.getElementById('sim-modal').classList.remove('open');
   if(simFanChart){simFanChart.destroy();simFanChart=null;}
   if(simHistChart){simHistChart.destroy();simHistChart=null;}
+  if(simMapTimer){clearInterval(simMapTimer);simMapTimer=null;}
+  if(simMap){simMap.remove();simMap=null;}
+  simMapCountyCircles={};simMapCrewLines=[];
 }
 
 function runAndDisplaySim(){
@@ -980,6 +1001,130 @@ function renderSimCharts({bands,restoreTimes,simHours},peak,fips,maxHr){
   document.getElementById('sim-stat-ci').textContent=`${fmt(p5t)} – ${fmt(p95t)}`;
   document.getElementById('sim-stat-p48').textContent=(p48*100).toFixed(0)+'%';
   document.getElementById('sim-stat-p72').textContent=(p72*100).toFixed(0)+'%';
+  // Init dispatch map after charts render
+  const mobilDelay=+document.getElementById('sim-delay').value;
+  setTimeout(()=>initSimDispatchMap(fips,{bands,restoreTimes,simHours:maxHr},mobilDelay),50);
+}
+
+// ─── Crew Dispatch Map ────────────────────────────────────────────────────────
+let simMap=null,simMapCrewLines=[],simMapCountyCircles={},
+    simMapTimer=null,simMapH=0,simMapMaxH=0,simMapResult=null,simMapMobilDelay=0,simMapFips=null,simMapPeakMs=0;
+
+function initSimDispatchMap(fips,result,mobilDelay){
+  if(simMapTimer){clearInterval(simMapTimer);simMapTimer=null;}
+  document.getElementById('sim-play-btn').textContent='▶';
+  if(simMap){simMap.remove();simMap=null;}
+  simMapCrewLines=[];simMapCountyCircles={};
+  simMapResult=result;simMapMobilDelay=mobilDelay;simMapFips=fips;
+  simMapH=0;simMapMaxH=result.simHours;
+  const sl=document.getElementById('sim-map-slider');sl.max=simMapMaxH;sl.value=0;
+  const mt=COUNTY_METRICS[fips];
+  const c=COUNTY_COORDS[fips];if(!c||!mt)return;
+  simMapPeakMs=mt.peak_hidx!==null?new Date(HOURS[mt.peak_hidx]).getTime():0;
+  const state=c[3];
+  simMap=L.map('sim-dispatch-map',{center:[c[0],c[1]],zoom:7,zoomControl:true,attributionControl:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:0.25}).addTo(simMap);
+  // Grid lines (dimmed)
+  (GRID.feeders||[]).forEach(f=>{
+    if(!f||!f.coords||f.coords.length<2)return;
+    L.polyline(f.coords,{color:'#4488ff',weight:f.voltage_kv>=230?1.4:0.9,opacity:0.35,dashArray:f.voltage_kv<230?'5,4':null}).addTo(simMap);
+  });
+  (GRID.laterals||[]).forEach(l=>{
+    if(!l||!l.coords||l.coords.length<2)return;
+    L.polyline(l.coords,{color:'#4ec9b0',weight:0.8,opacity:0.2,dashArray:'3,4'}).addTo(simMap);
+  });
+  // Substation staging markers (same state)
+  SUBSTATIONS.filter(s=>s.state===state).forEach(s=>{
+    const sz=s.voltage_kv>=345?13:s.voltage_kv>=230?11:9;
+    const ico=L.divIcon({className:'',
+      html:`<div style="width:${sz}px;height:${sz}px;background:#f0c040;border:2px solid #ffffffcc;border-radius:2px;transform:rotate(45deg);box-shadow:0 0 5px #f0c04099"></div>`,
+      iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+    L.marker([s.lat,s.lon],{icon:ico,zIndexOffset:600})
+      .bindTooltip(`<b>⚡ ${s.name}</b><br>${s.utility} · ${s.voltage_kv} kV`,{className:'tip',direction:'top'})
+      .addTo(simMap);
+  });
+  // County circles for same-state counties with meaningful outage history
+  Object.entries(COUNTY_COORDS).filter(([f,co])=>co[3]===state).forEach(([cf,co])=>{
+    const cmt=COUNTY_METRICS[cf];if(!cmt||!cmt.peak||cmt.peak<5)return;
+    const circle=L.circleMarker([co[0],co[1]],{radius:5,color:'#ffffff22',weight:0.5,fillColor:'#f85149',fillOpacity:0})
+      .bindTooltip('',{className:'tip',direction:'top'})
+      .addTo(simMap);
+    simMapCountyCircles[cf]=circle;
+  });
+  updateSimMapAt(0);
+}
+
+function simCountyOutage(cf,h){
+  const mt=COUNTY_METRICS[cf];if(!mt||!mt.peak||mt.peak<5)return 0;
+  if(cf===simMapFips){
+    return simMapResult.bands[50][Math.min(h,simMapResult.simHours)]||0;
+  }
+  if(!simMapPeakMs)return 0;
+  const targetMs=simMapPeakMs+h*3600000;
+  // binary-search nearest HOURS entry within 3h
+  let lo=0,hi=HOURS.length-1,best=-1,bestD=Infinity;
+  while(lo<=hi){const mid=(lo+hi)>>1;const d=Math.abs(new Date(HOURS[mid]).getTime()-targetMs);if(d<bestD){bestD=d;best=mid;}if(new Date(HOURS[mid]).getTime()<targetMs)lo=mid+1;else hi=mid-1;}
+  if(best<0||bestD>10800000)return 0;
+  const rec=(HOUR_INDEX[HOURS[best]]||[]).find(r=>r[0]===cf);
+  return rec?rec[1]:0;
+}
+
+function updateSimMapAt(h){
+  if(!simMap)return;
+  simMapH=h;
+  document.getElementById('sim-map-slider').value=h;
+  document.getElementById('sim-map-time-lbl').textContent=`Hour +${h} post-peak`;
+  const c=COUNTY_COORDS[simMapFips];if(!c)return;
+  const state=c[3];
+  const activeCounties=[];
+  Object.entries(simMapCountyCircles).forEach(([cf,circle])=>{
+    const mt=COUNTY_METRICS[cf];if(!mt)return;
+    const outage=simCountyOutage(cf,h);
+    const pct=outage/mt.peak;
+    if(pct>0.01){
+      const radius=Math.max(4,Math.min(22,4+Math.sqrt(outage/80)));
+      const col=pct>0.5?'#f85149':pct>0.2?'#ff7b40':'#ffbb44';
+      circle.setStyle({fillOpacity:Math.min(0.88,0.12+pct*0.76),fillColor:col,radius});
+      circle.setTooltipContent(`${COUNTY_COORDS[cf][2]} Co.: ${Math.round(outage).toLocaleString()} out (${Math.round(pct*100)}% of peak)`);
+      const co=COUNTY_COORDS[cf];
+      if(co)activeCounties.push({fips:cf,lat:co[0],lon:co[1],outage,pct});
+    } else {
+      circle.setStyle({fillOpacity:0,radius:4});
+    }
+  });
+  // Remove old crew lines
+  simMapCrewLines.forEach(l=>simMap.removeLayer(l));simMapCrewLines=[];
+  // Draw crew flow lines if past mobilization delay
+  if(h>=simMapMobilDelay&&activeCounties.length>0){
+    const stateSubs=SUBSTATIONS.filter(s=>s.state===state);
+    if(stateSubs.length>0){
+      activeCounties.forEach(ac=>{
+        const nearest=stateSubs.reduce((best,s)=>{const d=Math.hypot(s.lat-ac.lat,s.lon-ac.lon);return d<best.d?{s,d}:best;},{s:null,d:Infinity});
+        if(!nearest.s)return;
+        const w=1+ac.pct*3;
+        const alpha=0.15+ac.pct*0.6;
+        const line=L.polyline([[nearest.s.lat,nearest.s.lon],[ac.lat,ac.lon]],
+          {color:`rgba(88,166,255,${alpha.toFixed(2)})`,weight:w,dashArray:'5,4'}).addTo(simMap);
+        simMapCrewLines.push(line);
+      });
+    }
+  }
+}
+
+function toggleSimPlay(){
+  const btn=document.getElementById('sim-play-btn');
+  if(simMapTimer){clearInterval(simMapTimer);simMapTimer=null;btn.textContent='▶';return;}
+  if(simMapH>=simMapMaxH)updateSimMapAt(0);
+  btn.textContent='⏸';
+  simMapTimer=setInterval(()=>{
+    if(simMapH>=simMapMaxH){clearInterval(simMapTimer);simMapTimer=null;btn.textContent='▶';}
+    else updateSimMapAt(simMapH+1);
+  },80);
+}
+
+function seekSimMap(h){
+  if(simMapTimer){clearInterval(simMapTimer);simMapTimer=null;document.getElementById('sim-play-btn').textContent='▶';}
+  updateSimMapAt(h);
 }
 
 // ─── Compare Panel ────────────────────────────────────────────────────────────
