@@ -142,6 +142,38 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
 #modal-chart-wrap{flex:1;min-height:400px;position:relative}
 .zoom-hint{font-size:.62rem;color:#8b949e;text-align:center}
 
+/* ── Monte Carlo Simulation Modal ── */
+#sim-modal{display:none;position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,.82);align-items:center;justify-content:center}
+#sim-modal.open{display:flex}
+#sim-modal-inner{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;width:95vw;max-width:1100px;max-height:93vh;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+#sim-header{display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0;gap:10px}
+#sim-county-name{font-size:.8rem;font-weight:600;color:#c9d1d9;line-height:1.4}
+#sim-header>button{background:none;border:none;color:#8b949e;cursor:pointer;font-size:1.1rem;padding:2px 6px;flex-shrink:0}
+#sim-header>button:hover{color:#e6edf3}
+#sim-body{display:flex;gap:16px;flex:1;min-height:0}
+#sim-charts{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+.sim-chart-lbl{font-size:.63rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8b949e}
+#sim-fan-wrap{position:relative;height:255px}
+#sim-hist-wrap{position:relative;height:165px}
+#sim-controls{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:9px}
+.sim-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sim-stat-box{background:#0d1117;border:1px solid #21262d;border-radius:5px;padding:7px 9px}
+.sim-stat-val{font-size:1.05rem;font-weight:700;color:#f85149;font-variant-numeric:tabular-nums;line-height:1.2}
+.sim-stat-val.blue{color:#58a6ff}
+.sim-stat-lbl{font-size:.59rem;color:#8b949e;margin-top:2px;line-height:1.3}
+.sim-divider{font-size:.63rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#484f58;border-top:1px solid #21262d;padding-top:8px;margin-top:2px}
+.sim-ctrl-group{display:flex;flex-direction:column;gap:3px}
+.sim-ctrl-group label{font-size:.68rem;color:#8b949e;display:flex;justify-content:space-between;align-items:center}
+.sim-ctrl-group label span{color:#c9d1d9;font-weight:600;font-variant-numeric:tabular-nums}
+.sim-ctrl-group input[type=range]{width:100%;accent-color:#f85149;cursor:pointer;height:3px}
+#sim-run-btn{width:100%;padding:9px;background:#f85149;border:none;border-radius:6px;color:#fff;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .15s;margin-top:2px}
+#sim-run-btn:hover{background:#e03040}
+#sim-run-btn:disabled{background:#30363d;color:#8b949e;cursor:not-allowed}
+.sim-note{font-size:.61rem;color:#484f58;line-height:1.5}
+.sim-open-btn{width:100%;padding:7px 10px;background:#21262d;border:1px solid #30363d;border-radius:5px;color:#8b949e;cursor:pointer;font-size:.73rem;text-align:left;transition:all .15s;margin-bottom:4px}
+.sim-open-btn:hover{border-color:#f85149;color:#f85149}
+@media(max-width:700px){#sim-body{flex-direction:column}#sim-controls{width:100%}}
+
 .compare-btn{width:100%;padding:7px;background:#21262d;border:1px solid #30363d;
   border-radius:6px;color:#e6edf3;cursor:pointer;font-size:.75rem;margin-bottom:10px;transition:background .15s}
 .compare-btn:hover{background:#30363d}
@@ -324,6 +356,7 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
       <div class="chart-wrap"><canvas id="detail-chart"></canvas></div>
       <div class="utility-info" id="d-utility"></div>
       <div class="insight-box" id="d-insight"></div>
+      <button class="sim-open-btn" onclick="openSimModal()">&#x26A1; Monte Carlo Response Simulation</button>
     </div>
   </div>
 
@@ -354,6 +387,51 @@ header{background:linear-gradient(135deg,#1a1f2e,#0f1520);border-bottom:1px soli
     </div>
     <div class="zoom-hint">Scroll to zoom · Shift+drag to pan · Double-click to reset</div>
     <div id="modal-chart-wrap"><canvas id="modal-chart"></canvas></div>
+  </div>
+</div>
+
+<!-- Monte Carlo Simulation Modal -->
+<div id="sim-modal" onclick="closeSimModal(event)">
+  <div id="sim-modal-inner">
+    <div id="sim-header">
+      <span id="sim-county-name">Monte Carlo Response Simulation</span>
+      <button onclick="closeSimModal()">&#x2715;</button>
+    </div>
+    <div id="sim-body">
+      <div id="sim-charts">
+        <div class="sim-chart-lbl">Restoration Trajectory — Simulated Percentile Bands</div>
+        <div id="sim-fan-wrap"><canvas id="sim-fan-chart"></canvas></div>
+        <div class="sim-chart-lbl">Time to 90% Restoration — Simulation Distribution</div>
+        <div id="sim-hist-wrap"><canvas id="sim-hist-chart"></canvas></div>
+      </div>
+      <div id="sim-controls">
+        <div class="sim-stats-grid">
+          <div class="sim-stat-box"><div class="sim-stat-val" id="sim-stat-median">—</div><div class="sim-stat-lbl">Median restore</div></div>
+          <div class="sim-stat-box"><div class="sim-stat-val" style="font-size:.82rem" id="sim-stat-ci">—</div><div class="sim-stat-lbl">90% CI range</div></div>
+          <div class="sim-stat-box"><div class="sim-stat-val blue" id="sim-stat-p48">—</div><div class="sim-stat-lbl">P(restored ≤48h)</div></div>
+          <div class="sim-stat-box"><div class="sim-stat-val blue" id="sim-stat-p72">—</div><div class="sim-stat-lbl">P(restored ≤72h)</div></div>
+        </div>
+        <div class="sim-divider">Parameters</div>
+        <div class="sim-ctrl-group">
+          <label>Crews deployed <span id="sim-crews-val">—</span></label>
+          <input type="range" id="sim-crews" min="5" max="2000" step="5" oninput="document.getElementById('sim-crews-val').textContent=this.value">
+        </div>
+        <div class="sim-ctrl-group">
+          <label>Repair rate (cust/crew/hr) <span id="sim-rate-val">8</span></label>
+          <input type="range" id="sim-rate" min="1" max="30" step="0.5" value="8" oninput="document.getElementById('sim-rate-val').textContent=(+this.value).toFixed(1)">
+        </div>
+        <div class="sim-ctrl-group">
+          <label>Mobilization delay (hrs) <span id="sim-delay-val">16</span></label>
+          <input type="range" id="sim-delay" min="0" max="72" step="1" value="16" oninput="document.getElementById('sim-delay-val').textContent=this.value">
+        </div>
+        <div class="sim-ctrl-group">
+          <label>Iterations <span id="sim-iters-val">500</span></label>
+          <input type="range" id="sim-iters" min="100" max="1000" step="100" value="500" oninput="document.getElementById('sim-iters-val').textContent=this.value">
+        </div>
+        <button id="sim-run-btn" onclick="runAndDisplaySim()">&#x25BA; Run Simulation</button>
+        <p class="sim-note">Each run samples crew variability (±30%), log-normal repair rates, and mobilization timing. Red bands = 5–95th (outer) and 25–75th (inner) percentile envelopes. Median shown in red. Blue dashed = actual recorded outage data.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -681,6 +759,227 @@ function closeChartModal(e){
   if(e&&e.target!==document.getElementById('chart-modal'))return;
   document.getElementById('chart-modal').classList.remove('open');
   if(modalChart){modalChart.destroy();modalChart=null;}
+}
+
+// ─── Monte Carlo Simulation ───────────────────────────────────────────────────
+let simFanChart=null, simHistChart=null, simFips=null;
+
+function parseCrewNum(s){return parseInt((s||'0').replace(/[~,+\s]/g,''))||0;}
+
+function getStateCrewTotal(state){
+  return(UTILITY_INFO[state]?.crews||[]).reduce((s,u)=>s+parseCrewNum(u.n),0);
+}
+
+function defaultCrewsForCounty(state){
+  const total=getStateCrewTotal(state);
+  const affected=Math.max(1,Object.entries(COUNTY_METRICS).filter(([fips,m])=>{
+    const c=COUNTY_COORDS[fips]; return c&&c[3]===state&&m.peak>100;
+  }).length);
+  return Math.max(10,Math.round(total/affected));
+}
+
+function runMonteCarlo({peak,crews,repairRate,mobilDelay,iters,simHours}){
+  const threshold=peak*0.10;
+  const trajectories=[];
+  const restoreTimes=[];
+  for(let i=0;i<iters;i++){
+    const effCrews=Math.max(1,crews*(0.7+Math.random()*0.6));
+    const effRate=repairRate*Math.exp(-0.25+Math.random()*0.5);
+    const effDelay=Math.max(0,mobilDelay*(0.75+Math.random()*0.5));
+    const rampHrs=3+Math.random()*9;
+    const traj=new Float32Array(simHours+1);
+    traj[0]=peak;
+    let out=peak, restoreH=simHours+1;
+    for(let h=1;h<=simHours;h++){
+      if(out<=0){traj[h]=0;continue;}
+      const active=h<=effDelay?0:Math.min(1,(h-effDelay)/rampHrs);
+      const fatigue=Math.max(0.75,1-Math.max(0,h-effDelay-18)*0.008);
+      out=Math.max(0,out-(effCrews*active*effRate*fatigue));
+      traj[h]=out;
+      if(out<=threshold&&restoreH===simHours+1)restoreH=h;
+    }
+    trajectories.push(traj);
+    restoreTimes.push(restoreH);
+  }
+  // Percentile bands
+  const PCT=[5,25,50,75,95];
+  const bands={};
+  PCT.forEach(p=>{bands[p]=new Array(simHours+1);});
+  const scratch=new Array(iters);
+  for(let h=0;h<=simHours;h++){
+    for(let i=0;i<iters;i++)scratch[i]=trajectories[i][h];
+    scratch.sort((a,b)=>a-b);
+    PCT.forEach(p=>bands[p][h]=scratch[Math.round((p/100)*(iters-1))]);
+  }
+  return{bands,restoreTimes,simHours};
+}
+
+function buildActualRelative(fips,simHours){
+  const mt=COUNTY_METRICS[fips];
+  if(!mt||mt.peak_hidx==null)return null;
+  const peakMs=new Date(HOURS[mt.peak_hidx]).getTime();
+  const result=new Array(simHours+1).fill(null);
+  result[0]=mt.peak;
+  for(let i=mt.peak_hidx+1;i<HOURS.length;i++){
+    const h=Math.round((new Date(HOURS[i]).getTime()-peakMs)/3600000);
+    if(h>simHours)break;
+    const recs=HOUR_INDEX[HOURS[i]]||[];
+    const rec=recs.find(r=>r[0]===fips);
+    result[h]=rec?rec[1]:0;
+  }
+  return result;
+}
+
+function openSimModal(){
+  if(!currentFips)return;
+  const c=COUNTY_COORDS[currentFips];if(!c)return;
+  simFips=currentFips;
+  const state=c[3]||'';
+  document.getElementById('sim-county-name').textContent=`${c[2]} County, ${state} — Monte Carlo Response Simulation`;
+  const defCrews=Math.min(500,defaultCrewsForCounty(state));
+  const sl=document.getElementById('sim-crews');
+  sl.max=Math.min(2000,defCrews*5);sl.value=defCrews;
+  document.getElementById('sim-crews-val').textContent=defCrews;
+  document.getElementById('sim-rate').value=8;
+  document.getElementById('sim-rate-val').textContent='8.0';
+  document.getElementById('sim-delay').value=16;
+  document.getElementById('sim-delay-val').textContent='16';
+  document.getElementById('sim-iters').value=500;
+  document.getElementById('sim-iters-val').textContent='500';
+  ['sim-stat-median','sim-stat-ci','sim-stat-p48','sim-stat-p72'].forEach(id=>document.getElementById(id).textContent='—');
+  document.getElementById('sim-modal').classList.add('open');
+  setTimeout(runAndDisplaySim,30);
+}
+
+function closeSimModal(e){
+  if(e&&e.target!==document.getElementById('sim-modal'))return;
+  document.getElementById('sim-modal').classList.remove('open');
+  if(simFanChart){simFanChart.destroy();simFanChart=null;}
+  if(simHistChart){simHistChart.destroy();simHistChart=null;}
+}
+
+function runAndDisplaySim(){
+  if(!simFips)return;
+  const mt=COUNTY_METRICS[simFips]||{};
+  const peak=mt.peak||100;
+  const crews=+document.getElementById('sim-crews').value;
+  const repairRate=+document.getElementById('sim-rate').value;
+  const mobilDelay=+document.getElementById('sim-delay').value;
+  const iters=+document.getElementById('sim-iters').value;
+  const simHours=Math.min(200,Math.max(48,mobilDelay+Math.ceil(peak/(crews*repairRate))*4+24));
+  const btn=document.getElementById('sim-run-btn');
+  btn.textContent='⏳ Running…';btn.disabled=true;
+  setTimeout(()=>{
+    try{
+      const result=runMonteCarlo({peak,crews,repairRate,mobilDelay,iters,simHours});
+      renderSimCharts(result,peak,simFips,simHours);
+    }finally{btn.textContent='▶ Run Simulation';btn.disabled=false;}
+  },15);
+}
+
+function renderSimCharts({bands,restoreTimes,simHours},peak,fips,maxHr){
+  const hrLabels=Array.from({length:simHours+1},(_,i)=>i);
+  const actualPts=buildActualRelative(fips,simHours+1);
+
+  // ── Fan chart ──
+  if(simFanChart){simFanChart.destroy();simFanChart=null;}
+  const fc=document.getElementById('sim-fan-chart').getContext('2d');
+  const actualDS=actualPts?[{
+    label:'Actual',data:actualPts,fill:false,
+    borderColor:'#58a6ff',borderWidth:2,borderDash:[5,3],
+    pointRadius:0,spanGaps:false,tension:0
+  }]:[];
+  simFanChart=new Chart(fc,{
+    type:'line',
+    data:{
+      labels:hrLabels,
+      datasets:[
+        {label:'p5', data:bands[5], fill:false, borderColor:'transparent', borderWidth:0, pointRadius:0},
+        {label:'p95',data:bands[95],fill:{target:0,above:'rgba(248,81,73,0.07)',below:'rgba(248,81,73,0.07)'},borderColor:'rgba(248,81,73,0.22)',borderWidth:0.8,pointRadius:0},
+        {label:'p25',data:bands[25],fill:false, borderColor:'transparent', borderWidth:0, pointRadius:0},
+        {label:'p75',data:bands[75],fill:{target:2,above:'rgba(248,81,73,0.16)',below:'rgba(248,81,73,0.16)'},borderColor:'rgba(248,81,73,0.38)',borderWidth:0.8,pointRadius:0},
+        {label:'Median',data:bands[50],fill:false,borderColor:'#f85149',borderWidth:2.5,pointRadius:0,tension:0},
+        ...actualDS
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{
+          filter:i=>['Median','Actual'].includes(i.text),
+          color:'#8b949e',font:{size:10},boxWidth:18,padding:10
+        }},
+        tooltip:{callbacks:{
+          title:items=>`Hour +${items[0].label} since peak`,
+          label:item=>{
+            if(['p5','p25','p75','p95'].includes(item.dataset.label))return null;
+            const v=item.raw;
+            return v!=null?`${item.dataset.label}: ${Math.round(v).toLocaleString()} customers`:null;
+          }
+        }}
+      },
+      scales:{
+        x:{title:{display:true,text:'Hours since peak outage',color:'#8b949e',font:{size:10}},
+          ticks:{color:'#8b949e',font:{size:9},maxTicksLimit:12},grid:{color:'#21262d'}},
+        y:{min:0,max:peak*1.05,
+          ticks:{color:'#8b949e',font:{size:9},callback:v=>fmtN(v)},grid:{color:'#21262d'}}
+      }
+    }
+  });
+
+  // ── Histogram ──
+  const BINS=20;
+  const validTimes=restoreTimes.filter(t=>t<=simHours);
+  const hMin=0,hMax=simHours,binW=(hMax-hMin)/BINS;
+  const binCounts=new Array(BINS).fill(0);
+  validTimes.forEach(t=>{binCounts[Math.min(BINS-1,Math.floor((t-hMin)/binW))]++;});
+  const actualRestH=COUNTY_METRICS[fips]?.restore_h??null;
+  // Highlight the bin containing actual restore time
+  const actualBin=actualRestH!=null?Math.min(BINS-1,Math.floor((actualRestH-hMin)/binW)):-1;
+  const binColors=binCounts.map((_,i)=>i===actualBin?'rgba(88,166,255,0.7)':'rgba(248,81,73,0.5)');
+  const binBorders=binCounts.map((_,i)=>i===actualBin?'#58a6ff':'rgba(248,81,73,0.8)');
+  const binLabels=Array.from({length:BINS},(_,i)=>Math.round(hMin+(i+0.5)*binW));
+
+  if(simHistChart){simHistChart.destroy();simHistChart=null;}
+  const hc=document.getElementById('sim-hist-chart').getContext('2d');
+  simHistChart=new Chart(hc,{
+    type:'bar',
+    data:{labels:binLabels,datasets:[{
+      label:'Simulations',data:binCounts,
+      backgroundColor:binColors,borderColor:binBorders,
+      borderWidth:1,borderRadius:2
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          title:items=>`~${items[0].label}h to 90% restore`,
+          label:item=>`${item.raw} runs (${((item.raw/restoreTimes.length)*100).toFixed(1)}%)`
+        }}
+      },
+      scales:{
+        x:{title:{display:true,text:'Hours to 90% restoration',color:'#8b949e',font:{size:10}},
+          ticks:{color:'#8b949e',font:{size:9},maxTicksLimit:10},grid:{color:'#21262d'}},
+        y:{title:{display:true,text:'# Simulations',color:'#8b949e',font:{size:10}},
+          ticks:{color:'#8b949e',font:{size:9}},grid:{color:'#21262d'}}
+      }
+    }
+  });
+
+  // ── Stats ──
+  const sorted=[...restoreTimes].sort((a,b)=>a-b);
+  const median=sorted[Math.floor(sorted.length/2)];
+  const p5t=sorted[Math.floor(0.05*sorted.length)];
+  const p95t=sorted[Math.floor(0.95*sorted.length)];
+  const p48=restoreTimes.filter(t=>t<=48).length/restoreTimes.length;
+  const p72=restoreTimes.filter(t=>t<=72).length/restoreTimes.length;
+  const fmt=h=>h>simHours?'>'+simHours+'h':h+'h';
+  document.getElementById('sim-stat-median').textContent=fmt(median);
+  document.getElementById('sim-stat-ci').textContent=`${fmt(p5t)} – ${fmt(p95t)}`;
+  document.getElementById('sim-stat-p48').textContent=(p48*100).toFixed(0)+'%';
+  document.getElementById('sim-stat-p72').textContent=(p72*100).toFixed(0)+'%';
 }
 
 // ─── Compare Panel ────────────────────────────────────────────────────────────
